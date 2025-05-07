@@ -1,0 +1,2 @@
+Criar produto ex:
+    Request HTTP ➜ Controller ➜ UseCase ➜ Repository (Interface) ➜ Prisma (Implementação) ➜ Banco de Dados

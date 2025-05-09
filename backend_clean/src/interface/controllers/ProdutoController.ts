@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { CreateProduto } from "../../application/usecases/CreateProduto";
-import { GetProduto } from "../../application/usecases/GetProduto";
-import { UpdateProduto } from "../../application/usecases/UpdateProduto";
-import { DeleteProduto } from "../../application/usecases/DeleteProduto";
+import { CreateProduto } from "../../application/usecases/Produto/CreateProduto";
+import { GetProduto } from "../../application/usecases/Produto/GetProduto";
+import { UpdateProduto } from "../../application/usecases/Produto/UpdateProduto";
+import { DeleteProduto } from "../../application/usecases/Produto/DeleteProduto";
 import { ProdutoPrismaRepository } from "../../infraestructure/prisma/repositories/ProdutoPrismaRepository";
 const produtoRepo = new ProdutoPrismaRepository();
 

@@ -1,4 +1,4 @@
-import { IProdutoRepository } from "../../domain/repositories/IProdutoRepository";
+import { IProdutoRepository } from "../../../domain/repositories/IProdutoRepository";
 
 export class DeleteProduto{
     constructor(private produtoRep: IProdutoRepository){}

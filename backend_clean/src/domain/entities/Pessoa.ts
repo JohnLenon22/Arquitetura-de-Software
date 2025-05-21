@@ -1,7 +1,6 @@
-export class Categoria{
+export class Pessoa{
     constructor(
         public readonly id: string,
         public nome: string,
     ){}
-    
 }

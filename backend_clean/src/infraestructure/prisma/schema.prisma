@@ -3,112 +3,77 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql" 
+  provider = "postgres"
   url      = env("DATABASE_URL")
 }
 
 model Produto {
-  id              String              @id @default(uuid())
-  nome            String
-  descricao       String?
-  codigoBarras    String?             @unique
-  precoCompra     Float
-  precoVenda      Float
-  dataCadastro    DateTime            @default(now())
-  ativo           Boolean             @default(true)
-
-  idCategoria     String
-  categoria       Categoria           @relation(fields: [idCategoria], references: [id])
-
-  idFornecedor    String?
-  fornecedor      Fornecedor?         @relation(fields: [idFornecedor], references: [id])
-
-  estoques        Estoque[]
-  movimentacoes   MovimentacaoEstoque[]
-}
-
-model Categoria {
-  id        String     @id @default(uuid())
-  nome      String
-  descricao String?
-
-  produtos  Produto[]
-}
-
-model Fornecedor {
-  id        String     @id @default(uuid())
-  nome      String
-  cnpj      String     @unique
-  email     String?
-  telefone  String?
-  endereco  String?
-
-  produtos  Produto[]
-  compras   Compra[]
-}
-
-model LocalArmazenamento {
-  id             String     @id @default(uuid())
-  nome           String
-  endereco       String?
-  responsavel    String?
-
-  estoques       Estoque[]
-  movimentacoes  MovimentacaoEstoque[]
-}
-
-model Estoque {
-  id                   String     @id @default(uuid())
-  idProduto            String
-  idLocalArmazenamento String
-  quantidade           Int
-  dataAtualizacao      DateTime   @default(now())
-
-  produto              Produto    @relation(fields: [idProduto], references: [id])
-  local                LocalArmazenamento @relation(fields: [idLocalArmazenamento], references: [id])
-}
-
-model MovimentacaoEstoque {
-  id                   String     @id @default(uuid())
-  idProduto            String
-  idLocalArmazenamento String
-  idUsuario            String
-  tipo                 TipoMovimentacao
-  quantidade           Int
-  descricao            String?
-  data                 DateTime   @default(now())
-
-  produto              Produto    @relation(fields: [idProduto], references: [id])
-  local                LocalArmazenamento @relation(fields: [idLocalArmazenamento], references: [id])
-  usuario              Usuario    @relation(fields: [idUsuario], references: [id])
-}
-
-model Usuario {
-  id         String     @id @default(uuid())
-  nome       String
-  email      String     @unique
-  senhaHash  String
-  perfil     PerfilUsuario
-
+  id            String                @id @default(uuid())
+  nome          String
+  status        String
+  dataCadastro  DateTime
+  precoVenda    Float
+  precoCompra   Float
+  descricao     String
+  idCategoria   String
+  categoria     Categoria             @relation(fields: [idCategoria], references: [id])
   movimentacoes MovimentacaoEstoque[]
 }
 
-model Compra {
-  id           String     @id @default(uuid())
-  idFornecedor String
-  data         DateTime   @default(now())
-
-  fornecedor   Fornecedor @relation(fields: [idFornecedor], references: [id])
-  // Se quiser, pode adicionar uma tabela de itens depois
+model Categoria {
+  id       String     @id @default(uuid())
+  nome     String
+  produtos Produto[]
 }
 
-enum TipoMovimentacao {
-  ENTRADA
-  SAIDA
-  TRANSFERENCIA
+model MovimentacaoEstoque {
+  id                     String                 @id @default(uuid())
+  tipo                   String                 // 'ENTRADA' | 'SAIDA'
+  quantidade             Int
+  data                   DateTime               @default(now())
+  idProduto              String
+  idUsuario              String
+  idUsuarioMovimentacao  String
+  idLocalArmazenamento   String
+
+  produto                Produto                @relation(fields: [idProduto], references: [id])
+  usuario                Usuario                @relation("Criador", fields: [idUsuario], references: [id])
+  usuarioMovimentacao    Usuario                @relation("Executor", fields: [idUsuarioMovimentacao], references: [id])
+  localArmazenamento     LocalArmazenamento     @relation(fields: [idLocalArmazenamento], references: [id])
+  pessoasMovimentacao    PessoaMovimentacao[]
 }
 
-enum PerfilUsuario {
-  ADMIN
-  FUNCIONARIO
+model Usuario {
+  id                       String                 @id @default(uuid())
+  idPessoa                 String                 @unique
+  email                    String                 @unique
+  senhaHash                String
+
+  pessoa                   Pessoa                 @relation(fields: [idPessoa], references: [id])
+  movimentacoesCriadas     MovimentacaoEstoque[]  @relation("Criador")
+  movimentacoesExecutadas  MovimentacaoEstoque[]  @relation("Executor")
+}
+
+model Pessoa {
+  id                  String                @id @default(uuid())
+  nome                String
+  
+  usuario             Usuario?
+  movimentacoes       PessoaMovimentacao[]
+}
+
+model PessoaMovimentacao {
+  id              String               @id @default(uuid())
+  idPessoa        String
+  idMovimentacao  String
+  pessoa          Pessoa               @relation(fields: [idPessoa], references: [id])
+  movimentacao    MovimentacaoEstoque  @relation(fields: [idMovimentacao], references: [id])
+}
+
+model LocalArmazenamento {
+  id             String                @id @default(uuid())
+  nome           String
+  endereco       String
+  responsavel    String
+  movimentacoes  MovimentacaoEstoque[]
 }

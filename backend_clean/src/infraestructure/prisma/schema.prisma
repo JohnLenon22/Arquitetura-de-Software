@@ -16,6 +16,7 @@ model Produto {
   precoCompra   Float
   descricao     String
   idCategoria   String
+  quantidadeEstoque Int
   categoria     Categoria             @relation(fields: [idCategoria], references: [id])
   movimentacoes MovimentacaoEstoque[]
 }

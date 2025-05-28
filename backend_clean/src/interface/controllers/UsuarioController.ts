@@ -3,8 +3,9 @@ import { CreateUsuario } from "../../application/usecases/Usuario/CreateUsuario"
 import { GetUsuario } from "../../application/usecases/Usuario/GetUsuario";
 import { UpdateUsuario } from "../../application/usecases/Usuario/UpdateUsuario";
 import { DeleteUsuario } from "../../application/usecases/Usuario/DeleteUsuario";
-import { UsuarioPrismaRepository } from "../../infraestructure/prisma/repositories/UsuarioPrismaRepository";
 import { GetByIdUsuario } from "../../application/usecases/Usuario/GetByIdUsuario";
+
+import { UsuarioPrismaRepository } from "../../infraestructure/prisma/repositories/UsuarioPrismaRepository";
 const usuarioRep = new UsuarioPrismaRepository();
 
 const createProduto = new CreateUsuario(usuarioRep);

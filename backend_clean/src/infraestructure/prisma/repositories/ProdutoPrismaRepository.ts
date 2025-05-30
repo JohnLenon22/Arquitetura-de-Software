@@ -7,26 +7,45 @@ export class ProdutoPrismaRepository implements IProdutoRepository {
         await prisma.produto.create({
             data: {
                 nome: produto.nome,
-                preco: produto.preco,
+                status: produto.status,
+                dataCadastro: produto.dataCadastro,
+                precoVenda: produto.precoVenda,
+                precoCompra: produto.precoCompra,
                 descricao: produto.descricao,
                 quantidadeEstoque: produto.quantidadeEstoque,
-                categoriaId: produto.categoriaId
+                idCategoria: produto.idCategoria
             }
         });
     }
 
     async findAll(): Promise<Produto[]>{
         const produtos = await prisma.produto.findMany();
-        return produtos.map((p: { id: string; nome: string; preco: number; descricao: string | null; quantidadeEstoque: number; categoriaId: number }) => new Produto(
-            p.id,p.nome, p.preco, p.descricao || ``, p.quantidadeEstoque, p.categoriaId
+        return produtos.map((p: { id: string; nome: string;status: string; dataCadastro: Date; precoVenda: number, precoCompra: number, descricao: string, quantidadeEstoque: number, idCategoria: string}) => new Produto(
+            p.id, 
+            p.nome, 
+            p.status, 
+            p.dataCadastro, 
+            p.precoVenda, 
+            p.precoCompra,  
+            p.descricao || ``, 
+            p.quantidadeEstoque, 
+            p.idCategoria
         ));
 
     }
 
     async findById(id: string): Promise<Produto | null>{
-        const produto = await prisma.produto.findUnique({where:{id},});
+        const produto = await prisma.produto.findUnique({where:{id}});
         return produto ? new Produto(
-            produto.id,produto.nome, produto.preco, produto.descricao|| ``, produto.quantidadeEstoque, produto.categoriaId
+            produto.id, 
+            produto.nome, 
+            produto.status, 
+            produto.dataCadastro, 
+            produto.produtorecoVenda, 
+            produto.produtorecoComprodutora,  
+            produto.descricao || ``, 
+            produto.quantidadeEstoque, 
+            produto.idCategoria
         ):null;
     }
 
@@ -35,10 +54,13 @@ export class ProdutoPrismaRepository implements IProdutoRepository {
             where: {id},
             data: {
                 nome: produto.nome,
-                preco: produto.preco,
+                status: produto.status,
+                dataCadastro: produto.dataCadastro,
+                precoVenda: produto.precoVenda,
+                precoCompra: produto.precoCompra,
                 descricao: produto.descricao,
                 quantidadeEstoque: produto.quantidadeEstoque,
-                categoriaId: produto.categoriaId
+                idCategoria: produto.idCategoria
             }
         });
     }

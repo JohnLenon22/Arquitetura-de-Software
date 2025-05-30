@@ -58,7 +58,9 @@ model Usuario {
 model Pessoa {
   id                  String                @id @default(uuid())
   nome                String
-  
+  cliente             Boolean  
+  funcionario         Boolean 
+
   usuario             Usuario?
   movimentacoes       PessoaMovimentacao[]
 }

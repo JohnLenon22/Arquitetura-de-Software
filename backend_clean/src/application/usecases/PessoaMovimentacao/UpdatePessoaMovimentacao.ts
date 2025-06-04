@@ -1,6 +1,6 @@
 import { IPessoaMovimentacaoRepository } from "../../../domain/repositories/IPessoaMovimentacaoRepository";
 import { PessoaMovimentacao } from "../../../domain/entities/PessoaMovimentacao";
-export class UpdateProduto{
+export class UpdatePessoaMovimentacao{
     constructor(private pessoaMovimentacaoRep: IPessoaMovimentacaoRepository){}
 
     async execute(id:string, idPessoa:string, idMovimentacao:string){

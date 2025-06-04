@@ -1,6 +1,6 @@
 import { ICategoriaRepository } from "../../../domain/repositories/ICategoriaRepository";
 
-export class GetCategoria{
+export class GetByIdCategoria{
     constructor(private categoriaRep: ICategoriaRepository){}
 
         async execute(id: string){

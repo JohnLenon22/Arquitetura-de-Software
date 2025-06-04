@@ -1,3 +1,5 @@
+import { TipoMovimentacao } from "@prisma/client";
+
 export class MovimentacaoEstoque{
     constructor(
         public readonly id: string,
@@ -5,7 +7,7 @@ export class MovimentacaoEstoque{
         public readonly idUsuario: string,
         public readonly idLocalArmazenamento: string,
         public readonly idUsuarioMovimentacao: string,
-        public tipo: string,
+        public tipoMovimentacao: TipoMovimentacao,
         public quantidade: number,
         public data: Date = new Date() 
     ){
@@ -14,3 +16,4 @@ export class MovimentacaoEstoque{
         }
     }
 }
+

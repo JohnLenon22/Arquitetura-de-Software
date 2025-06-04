@@ -6,27 +6,30 @@ export class ProdutoPrismaRepository implements IProdutoRepository {
     async create(produto: Produto): Promise<void>{
         await prisma.produto.create({
             data: {
+                id: produto.id,
                 nome: produto.nome,
-                preco: produto.preco,
+                dataCadastro: produto.dataCadastro,
+                precoVenda: produto.precoVenda,
+                precoCompra: produto.precoCompra,
                 descricao: produto.descricao,
                 quantidadeEstoque: produto.quantidadeEstoque,
-                categoriaId: produto.categoriaId
+                idCategoria: produto.idCategoria
             }
         });
     }
 
     async findAll(): Promise<Produto[]>{
         const produtos = await prisma.produto.findMany();
-        return produtos.map((p: { id: string; nome: string; preco: number; descricao: string | null; quantidadeEstoque: number; categoriaId: number }) => new Produto(
-            p.id,p.nome, p.preco, p.descricao || ``, p.quantidadeEstoque, p.categoriaId
+        return produtos.map((p: { id: string; nome: string; dataCadastro: Date; precoVenda: number; precoCompra: number; descricao: string | null; quantidadeEstoque: number; idCategoria: string }) => new Produto(
+            p.id, p.nome, p.dataCadastro, p.precoVenda, p.precoCompra, p.descricao || ``, p.quantidadeEstoque, p.idCategoria
         ));
 
     }
 
     async findById(id: string): Promise<Produto | null>{
-        const produto = await prisma.produto.findUnique({where:{id},});
+        const produto = await prisma.produto.findUnique({where:{id}});
         return produto ? new Produto(
-            produto.id,produto.nome, produto.preco, produto.descricao|| ``, produto.quantidadeEstoque, produto.categoriaId
+            produto.id, produto.nome, produto.dataCadastro, produto.precoVenda, produto.precoCompra, produto.descricao || ``, produto.quantidadeEstoque, produto.idCategoria
         ):null;
     }
 
@@ -35,10 +38,12 @@ export class ProdutoPrismaRepository implements IProdutoRepository {
             where: {id},
             data: {
                 nome: produto.nome,
-                preco: produto.preco,
+                dataCadastro: produto.dataCadastro,
+                precoVenda: produto.precoVenda,
+                precoCompra: produto.precoCompra,
                 descricao: produto.descricao,
                 quantidadeEstoque: produto.quantidadeEstoque,
-                categoriaId: produto.categoriaId
+                idCategoria: produto.idCategoria
             }
         });
     }

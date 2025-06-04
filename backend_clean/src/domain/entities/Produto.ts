@@ -2,7 +2,6 @@ export class Produto {
     constructor(
         public readonly id: string,
         public nome: string,
-        public status: string,
         public dataCadastro: Date,
         public precoVenda: number,
         public precoCompra: number,

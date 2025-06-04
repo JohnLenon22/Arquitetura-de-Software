@@ -3,15 +3,14 @@ generator client {
 }
 
 datasource db {
-  provider = "postgres"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model Produto {
   id            String                @id @default(uuid())
   nome          String
-  status        String
-  dataCadastro  DateTime
+  dataCadastro  DateTime              @default(now())
   precoVenda    Float
   precoCompra   Float
   descricao     String
@@ -29,7 +28,7 @@ model Categoria {
 
 model MovimentacaoEstoque {
   id                     String                 @id @default(uuid())
-  tipo                   String                 // 'ENTRADA' | 'SAIDA'
+  tipoMovimentacao       TipoMovimentacao       // 'ENTRADA' | 'SAIDA' | 'TRANSFERENCIA'
   quantidade             Int
   data                   DateTime               @default(now())
   idProduto              String
@@ -49,7 +48,8 @@ model Usuario {
   idPessoa                 String                 @unique
   email                    String                 @unique
   senhaHash                String
-
+  tipoUsuario              TipoUsuario            // 'ADMIN' | 'OPERADOR'
+  
   pessoa                   Pessoa                 @relation(fields: [idPessoa], references: [id])
   movimentacoesCriadas     MovimentacaoEstoque[]  @relation("Criador")
   movimentacoesExecutadas  MovimentacaoEstoque[]  @relation("Executor")
@@ -58,7 +58,7 @@ model Usuario {
 model Pessoa {
   id                  String                @id @default(uuid())
   nome                String
-  
+  tipoPessoa          TipoPessoa            // 'CLIENTE' | 'FORNECEDOR'                
   usuario             Usuario?
   movimentacoes       PessoaMovimentacao[]
 }
@@ -77,4 +77,20 @@ model LocalArmazenamento {
   endereco       String
   responsavel    String
   movimentacoes  MovimentacaoEstoque[]
+}
+
+enum TipoUsuario {
+  ADMIN
+  OPERADOR
+}
+
+enum TipoPessoa {
+  CLIENTE
+  FORNECEDOR
+}
+
+enum TipoMovimentacao {
+  ENTRADA
+  SAIDA
+  TRANSFERENCIA
 }

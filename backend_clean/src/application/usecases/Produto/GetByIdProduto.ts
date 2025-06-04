@@ -4,7 +4,7 @@ import { IProdutoRepository } from "../../../domain/repositories/IProdutoReposit
 export class GetByIdProduto{
     constructor(private produtoRep: IProdutoRepository){}
 
-    async execute(id: string): Promise<Produto | null>{
+    async execute(id: string){
         return await this.produtoRep.findById(id)
     }
 }

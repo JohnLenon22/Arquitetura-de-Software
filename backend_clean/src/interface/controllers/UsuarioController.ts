@@ -6,19 +6,19 @@ import { DeleteUsuario } from "../../application/usecases/Usuario/DeleteUsuario"
 import { GetByIdUsuario } from "../../application/usecases/Usuario/GetByIdUsuario";
 
 import { UsuarioPrismaRepository } from "../../infraestructure/prisma/repositories/UsuarioPrismaRepository";
-const usuarioRep = new UsuarioPrismaRepository();
+const usuarioRepo = new UsuarioPrismaRepository();
 
-const createProduto = new CreateUsuario(usuarioRep);
-const getUsuario = new GetUsuario(usuarioRep);
-const getByIdUsuario = new GetByIdUsuario(usuarioRep);
-const updateUsuario = new UpdateUsuario(usuarioRep);
-const deleteUsuario = new DeleteUsuario(usuarioRep);
+const createProduto = new CreateUsuario(usuarioRepo);
+const getUsuario = new GetUsuario(usuarioRepo);
+const getByIdUsuario = new GetByIdUsuario(usuarioRepo);
+const updateUsuario = new UpdateUsuario(usuarioRepo);
+const deleteUsuario = new DeleteUsuario(usuarioRepo);
 
 export class UsuarioController{
     async create(req: Request, res:Response){
-        const {idPessoa, email, senhaHash} = req.body;
+        const {idPessoa, email, senhaHash, tipoUsuario} = req.body;
         try{
-            await createProduto.execute(idPessoa, email, senhaHash)
+            await createProduto.execute(idPessoa, email, senhaHash, tipoUsuario)
             res.status(201).json({message: `Usuario de nome "${email}" criado com sucesso`})
         }catch(err: any){
             res.status(400).json({error: err.message})
@@ -38,10 +38,10 @@ export class UsuarioController{
 
     async update(req: Request, res:Response){
         const {id} = req.params
-        const { } = req.body
+        const {idPessoa, email, senhaHash, tipoUsuario} = req.body
         try{
-            await updateUsuario.execute(id, )
-            res.status(200).json({message: `Produto atualizado com sucesso`})
+            await updateUsuario.execute(id, idPessoa, email, senhaHash, tipoUsuario)
+            res.status(200).json({message: `Usuario atualizado com sucesso`})
         }catch(err: any){
             res.status(400).json({error: err.message})
 
@@ -52,7 +52,7 @@ export class UsuarioController{
         const {id} = req.params
         try{
             await deleteUsuario.execute(id)
-            res.status(200).json({message: `Produto deletado com sucesso`})
+            res.status(200).json({message: `Usuario deletado com sucesso`})
 
         }catch(err: any){
             res.status(400).json({ error: err.message });

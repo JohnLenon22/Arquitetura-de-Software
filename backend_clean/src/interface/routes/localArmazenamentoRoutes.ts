@@ -4,10 +4,10 @@ import { LocalArmazenamentoController } from '../controllers/LocalArmazenamentoC
 const router = Router();
 const controller = new LocalArmazenamentoController();
 
-router.get('/storageLocations', (req, res) => controller.list(req, res));
-router.get('/storageLocation:id', (req, res) => controller.getById(req, res));
-router.post('/storageLocation', (req, res) => controller.create(req, res));
-router.put('/storageLocation:id', (req, res) => controller.update(req, res));
-router.delete('/storageLocation:id', (req, res) => controller.delete(req, res));
+router.get('/', (req, res) => controller.list(req, res));
+router.get('/:id', (req, res) => controller.getById(req, res));
+router.post('/', (req, res) => controller.create(req, res));
+router.put('/:id', (req, res) => controller.update(req, res));
+router.delete('/:id', (req, res) => controller.delete(req, res));
 
-export { router as produtoRoutes };
+export { router as localArmazenamentoRoutes };

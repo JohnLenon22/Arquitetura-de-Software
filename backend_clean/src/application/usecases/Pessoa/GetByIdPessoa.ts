@@ -4,7 +4,7 @@ export class GetByIdPessoa {
     constructor(private pessoaRep: IPessoaRepository){}
 
     async execute(id: string){
-        await this.pessoaRep.delete(id);
+        await this.pessoaRep.findById(id);
     }
 
 }

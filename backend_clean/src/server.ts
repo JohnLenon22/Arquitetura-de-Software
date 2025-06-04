@@ -1,13 +1,27 @@
-import express from "express";
+import express, { response } from "express";
+import { produtoRoutes }  from './interface/routes/produtoRoutes'; 
+import { usuarioRoutes }  from './interface/routes/usuarioRoutes';
+import { pessoaRoutes } from "./interface/routes/pessoaRoutes";
+import { categoriaRoutes } from "./interface/routes/categoriaRoutes";
+import { pessoaMovimentacaoRoutes } from "./interface/routes/pessoaMovimentacaoRoutes";
+import { localArmazenamentoRoutes } from "./interface/routes/localArmazenamentoRoutes";
+import { movimentacaoEstoqueRoutes } from "./interface/routes/movimentaoEstoqueRoutes";
 
-import {produtoRoutes}  from './interface/routes/produtoRoutes'; 
+
 
 const app = express();
 app.use(express.json());
 
-app.use("/produtos", produtoRoutes);
+app.use("/users", usuarioRoutes);
+app.use("/products", produtoRoutes);
+app.use("/categories", categoriaRoutes);
+app.use("/persons", pessoaRoutes);
+app.use("/movimentPersons", pessoaMovimentacaoRoutes);
+app.use("/storageLocations", localArmazenamentoRoutes);
+app.use("/movimentInventories", movimentacaoEstoqueRoutes);
 
-const PORT = process.env.PORT || 3000;
+
+const PORT = process.env.PORT || 22;
 app.listen(PORT, () => {
   console.log(`http://localhost:${PORT}/`);
 });

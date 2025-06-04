@@ -17,7 +17,9 @@ export class PessoaPrismaRepository implements IPessoaRepository {
     async findAll(): Promise<Pessoa[]>{
         const pessoas = await prisma.pessoa.findMany();
         return pessoas.map((p: { id: string; nome: string; tipoPessoa: TipoPessoa}) => new Pessoa(
-            p.id,p.nome, p.tipoPessoa
+            p.id,
+            p.nome, 
+            p.tipoPessoa
         ));
 
     }

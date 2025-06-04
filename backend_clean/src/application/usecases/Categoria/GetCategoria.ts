@@ -4,6 +4,6 @@ export class GetCategoria{
     constructor(private categoriaRep: ICategoriaRepository){}
 
         async execute(){
-            await this.categoriaRep.findAll();
+            return await this.categoriaRep.findAll();
         }
 }

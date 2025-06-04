@@ -14,7 +14,7 @@ export class CreatePessoa {
             tipoPessoa 
 
         )
-        await this.pessoaRep.create(pessoa);
+        return await this.pessoaRep.create(pessoa);
     }
 
 }

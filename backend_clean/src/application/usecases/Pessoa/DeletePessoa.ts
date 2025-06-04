@@ -3,7 +3,7 @@ import { IPessoaRepository } from "../../../domain/repositories/IPessoaRepositor
 export class DeletePessoa {
     constructor(private pessoaRep: IPessoaRepository){}
 
-    async execute(id: string){
+    async execute(id: string): Promise<void>{
         await this.pessoaRep.delete(id);
     }
 

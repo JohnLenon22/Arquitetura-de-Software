@@ -4,7 +4,7 @@ export class GetPessoaMovimentacao {
     constructor(private pessoaMovimentacaoRep: IPessoaMovimentacaoRepository){}
 
     async execute(){
-        await this.pessoaMovimentacaoRep.findAll();
+        return await this.pessoaMovimentacaoRep.findAll();
     }
 
 }

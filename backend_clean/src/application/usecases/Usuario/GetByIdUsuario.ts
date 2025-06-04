@@ -4,8 +4,8 @@ import { IUsuarioRepository } from "../../../domain/repositories/IUsuarioReposit
 export class GetByIdUsuario {
     constructor(private usuarioRep: IUsuarioRepository){}
 
-    async execute(id:string): Promise<Usuario | void>{
-        await this.usuarioRep.findById(id);
+    async execute(id:string){
+        return await this.usuarioRep.findById(id);
     }
 
 }

@@ -4,7 +4,7 @@ export class GetByIdPessoaMovimentacao {
     constructor(private pessoaMovimentacaoRep: IPessoaMovimentacaoRepository){}
 
     async execute(id: string){
-        await this.pessoaMovimentacaoRep.findById(id);
+        return await this.pessoaMovimentacaoRep.findById(id);
     }
 
 }

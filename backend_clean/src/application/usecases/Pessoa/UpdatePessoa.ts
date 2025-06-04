@@ -7,6 +7,6 @@ export class UpdatePessoa {
 
     async execute(id:string, nome: string, tipoPessoa: TipoPessoa){
         const pessoa = new Pessoa(id, nome, tipoPessoa)
-        await this.pessoaRep.update(id, pessoa)
+        return await this.pessoaRep.update(id, pessoa)
     }
 }

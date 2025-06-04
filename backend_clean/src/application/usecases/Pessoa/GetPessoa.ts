@@ -4,7 +4,7 @@ export class GetPessoa {
     constructor(private pessoaRep: IPessoaRepository){}
 
     async execute(){
-        await this.pessoaRep.findAll();
+        return await this.pessoaRep.findAll();
     }
 
 }

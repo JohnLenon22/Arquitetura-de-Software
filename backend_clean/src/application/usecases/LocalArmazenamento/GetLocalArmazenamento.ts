@@ -4,6 +4,6 @@ export class GetLocalArmazenamento{
     constructor(private localArmazenamentoRep: ILocalArmazenamentoRepository){}
     
         async execute(){
-            await this.localArmazenamentoRep.findAll();
+            return await this.localArmazenamentoRep.findAll();
         }
 }

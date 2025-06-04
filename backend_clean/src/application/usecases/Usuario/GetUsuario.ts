@@ -1,10 +1,10 @@
 import { IUsuarioRepository } from "../../../domain/repositories/IUsuarioRepository";
 
 export class GetUsuario {
-    constructor(private usuarioRep: IUsuarioRepository){}
+    constructor(private usuarioRepo: IUsuarioRepository){}
 
     async execute(){
-        await this.usuarioRep.findAll();
+        return await this.usuarioRepo.findAll();
     }
 
 }

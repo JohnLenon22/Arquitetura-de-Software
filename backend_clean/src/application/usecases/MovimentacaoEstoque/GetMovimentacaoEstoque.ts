@@ -2,8 +2,8 @@ import { IMovimentacaoEstoqueRepository } from "../../../domain/repositories/IMo
 
 export class GetMovimentacaoEstoque{
     constructor(private movimentacaoEstoqueRep: IMovimentacaoEstoqueRepository){}
-    
+
         async execute(){
-            await this.movimentacaoEstoqueRep.findAll();
+            return await this.movimentacaoEstoqueRep.findAll();
         }
 }

@@ -24,14 +24,13 @@ export class PessoaPrismaRepository implements IPessoaRepository {
 
     }
 
-    async findById(id: string): Promise<Pessoa | null>{
-        const pessoa = await prisma.pessoa.findUnique({where:{id}});
-        return pessoa ? new Pessoa(
-            pessoa.id,
-            pessoa.nome,
-            pessoa.tipoPessoa
-        ):null;
-    }
+    async findById(id: string): Promise<Pessoa | null> {
+        const pessoa = await prisma.pessoa.findUnique({where: {id}});
+        if (pessoa) {
+            return new Pessoa(pessoa.id, pessoa.nome, pessoa.tipoPessoa);
+        }
+        return null;
+  }
 
     async update(id:string, pessoa: Pessoa): Promise<void>{
         await prisma.pessoa.update({
@@ -44,7 +43,7 @@ export class PessoaPrismaRepository implements IPessoaRepository {
     }
 
     async delete(id:string): Promise<void>{
-        await prisma.pessoa.delete({where:{id}})
+        await prisma.pessoa.delete({where: {id}});
     }
 }
 

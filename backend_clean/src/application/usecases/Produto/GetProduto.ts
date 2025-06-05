@@ -4,7 +4,7 @@ import { IProdutoRepository } from "../../../domain/repositories/IProdutoReposit
 export class GetProduto{
     constructor(private produtoRep: IProdutoRepository){}
 
-    async execute(): Promise<Produto[]>{
+    async execute(){
         return await this.produtoRep.findAll()
     }
 }

@@ -3,7 +3,7 @@ import { ICategoriaRepository } from "../../../domain/repositories/ICategoriaRep
 export class GetByIdCategoria{
     constructor(private categoriaRep: ICategoriaRepository){}
 
-        async execute(id: string){
+        async execute(id: number){
             return await this.categoriaRep.findById(id);
         }
 }

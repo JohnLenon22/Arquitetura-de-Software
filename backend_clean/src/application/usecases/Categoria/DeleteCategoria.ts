@@ -3,7 +3,7 @@ import { ICategoriaRepository } from "../../../domain/repositories/ICategoriaRep
 export class DeleteCategoria{
     constructor(private categoriaRep: ICategoriaRepository){}
 
-        async execute(id: string){
+        async execute(id: number){
             await this.categoriaRep.delete(id);
         }
 }

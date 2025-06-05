@@ -2,9 +2,9 @@ import { Categoria } from "../entities/Categoria";
 
 export interface ICategoriaRepository {
     create(categoria: Categoria): Promise<void>;
-    findById(id: string): Promise<Categoria | null>;
+    findById(id: number): Promise<Categoria | null>;
     findAll(): Promise<Categoria[]>;
-    update(id: string, categoria: Categoria): Promise<void>;
-    delete(id: string): Promise<void>;
+    update(id: number, categoria: Categoria): Promise<void>;
+    delete(id: number): Promise<void>;
 
 }

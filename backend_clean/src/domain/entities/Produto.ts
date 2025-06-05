@@ -6,11 +6,9 @@ export class Produto {
         public precoVenda: number,
         public precoCompra: number,
         public descricao: string,
-        public quantidadeEstoque: number,
-        public idCategoria: string
+        public idCategoria: number
 
     ){
         if (precoVenda && precoCompra < 0) throw new Error("Preço inválido");
-        if (quantidadeEstoque < 0) throw new Error("Estoque inválido"); 
     }
 }   

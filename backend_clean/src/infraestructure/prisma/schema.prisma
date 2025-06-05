@@ -14,14 +14,14 @@ model Produto {
   precoVenda    Float
   precoCompra   Float
   descricao     String
-  idCategoria   String
-  quantidadeEstoque Int
+  idCategoria   Int
+
   categoria     Categoria             @relation(fields: [idCategoria], references: [id])
   movimentacoes MovimentacaoEstoque[]
 }
 
 model Categoria {
-  id       String     @id @default(uuid())
+  id       Int     @id @default(autoincrement())
   nome     String
   produtos Produto[]
 }
@@ -64,7 +64,7 @@ model Pessoa {
 }
 
 model PessoaMovimentacao {
-  id              String               @id @default(uuid())
+  id              String                  @id @default(uuid())
   idPessoa        String
   idMovimentacao  String
   pessoa          Pessoa               @relation(fields: [idPessoa], references: [id])

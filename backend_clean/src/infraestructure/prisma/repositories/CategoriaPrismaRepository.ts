@@ -6,13 +6,12 @@ export class CategoriaPrismaRepository implements ICategoriaRepository {
     async create(categoria: Categoria): Promise<void>{
         await prisma.categoria.create({
             data:{
-                id: crypto.randomUUID(),
                 nome: categoria.nome
             }
         })
     }
 
-    async findById(id: string): Promise<Categoria | null>{
+    async findById(id: number): Promise<Categoria | null>{
         const categoria = await prisma.categoria.findUnique({where:{id}})
         return categoria ? new Categoria(
             categoria.id,
@@ -22,13 +21,13 @@ export class CategoriaPrismaRepository implements ICategoriaRepository {
 
     async findAll(): Promise<Categoria[]>{
         const categorias = await prisma.categoria.findMany()
-        return categorias.map((c: {id: string, nome: string}) => new Categoria(
+        return categorias.map((c: {id: number, nome: string}) => new Categoria(
             c.id,
             c.nome
         ))   
     }
 
-    async update(id: string, categoria: Categoria): Promise<void>{
+    async update(id: number, categoria: Categoria): Promise<void>{
         await prisma.categoria.update({
             where:{id},
             data:{
@@ -37,7 +36,7 @@ export class CategoriaPrismaRepository implements ICategoriaRepository {
         })
     }
 
-    async delete(id: string): Promise<void>{
+    async delete(id: number): Promise<void>{
         await prisma.categoria.delete({where:{id}})
     }
 }

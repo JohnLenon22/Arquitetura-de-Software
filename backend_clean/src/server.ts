@@ -1,4 +1,4 @@
-import express, { response } from "express";
+import express from "express";
 import { produtoRoutes }  from './interface/routes/produtoRoutes'; 
 import { usuarioRoutes }  from './interface/routes/usuarioRoutes';
 import { pessoaRoutes } from "./interface/routes/pessoaRoutes";

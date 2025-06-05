@@ -12,7 +12,6 @@ export class ProdutoPrismaRepository implements IProdutoRepository {
                 precoVenda: produto.precoVenda,
                 precoCompra: produto.precoCompra,
                 descricao: produto.descricao,
-                quantidadeEstoque: produto.quantidadeEstoque,
                 idCategoria: produto.idCategoria
             }
         });
@@ -42,7 +41,6 @@ export class ProdutoPrismaRepository implements IProdutoRepository {
                 precoVenda: produto.precoVenda,
                 precoCompra: produto.precoCompra,
                 descricao: produto.descricao,
-                quantidadeEstoque: produto.quantidadeEstoque,
                 idCategoria: produto.idCategoria
             }
         });

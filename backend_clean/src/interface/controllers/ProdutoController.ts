@@ -18,8 +18,14 @@ export class ProdutoController{
     async create(req: Request, res:Response){
         const {nome,dataCadastro,precoVenda,precoCompra,descricao,idCategoria} = req.body;
         try{
-            await createProduto.execute(nome,dataCadastro,precoVenda,precoCompra,descricao,idCategoria)
-            res.status(201).json({message: `Produto de nome "${nome}" criado com sucesso`})
+            const novoProdutoCriado = await createProduto.execute(
+                nome, 
+                dataCadastro,
+                precoVenda,
+                precoCompra,
+                descricao,
+                idCategoria)
+            res.status(201).json(novoProdutoCriado);
         }catch(err: any){
             res.status(400).json({error: err.message})
         }

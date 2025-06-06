@@ -5,7 +5,7 @@ import { randomUUID } from "crypto";
 export class CreateProduto {
     constructor(private produtoRep: IProdutoRepository){}
 
-    async execute(nome: string, dataCadastro: Date ,precoVenda: number ,precoCompra: number,descricao: string , idCategoria: number){
+    async execute(nome: string, dataCadastro: Date ,precoVenda: number ,precoCompra: number,descricao: string , idCategoria: number): Promise<void>{
         const produto = new Produto(
             randomUUID(),
             nome,

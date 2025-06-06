@@ -32,7 +32,7 @@ export class CategoriaController{
 
     async getById(req: Request, res:Response){
         const { id } = req.params
-        const categoria = await getByIdCategoria.execute(id)
+        const categoria = await getByIdCategoria.execute(Number(id))
         res.json(categoria)
     }
 
@@ -40,7 +40,7 @@ export class CategoriaController{
         const { id } = req.params
         const { nome } = req.body
         try{
-            await updateCategoria.execute(id, nome)
+            await updateCategoria.execute(Number(id), nome)
             res.status(200).json({message: `Categoria atualizada com sucesso`})
         }catch(err: any){
             res.status(400).json({error: err.message})
@@ -50,7 +50,7 @@ export class CategoriaController{
     async delete(req: Request, res:Response){
         const {id} = req.params
         try{
-            await deleteCategoria.execute(id)
+            await deleteCategoria.execute(Number(id))
             res.status(200).json({message: `Categoria deletada com sucesso`})
 
         }catch(err: any){

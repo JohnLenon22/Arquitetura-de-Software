@@ -3,10 +3,10 @@ import { Categoria } from "../../../domain/entities/Categoria";
 export class CreateCategoria{
     constructor(private categoriaRep: ICategoriaRepository){}
 
-        async execute(id: number, nome: string){
+        async execute(nome: string){
             const categoria = new Categoria(
-                id,
-                nome, 
+                0,
+                nome
             )
             await this.categoriaRep.create(categoria);
         }

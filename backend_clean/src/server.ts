@@ -7,8 +7,6 @@ import { pessoaMovimentacaoRoutes } from "./interface/routes/pessoaMovimentacaoR
 import { localArmazenamentoRoutes } from "./interface/routes/localArmazenamentoRoutes";
 import { movimentacaoEstoqueRoutes } from "./interface/routes/movimentaoEstoqueRoutes";
 
-
-
 const app = express();
 app.use(express.json());
 
@@ -21,7 +19,7 @@ app.use("/storageLocations", localArmazenamentoRoutes);
 app.use("/movimentInventories", movimentacaoEstoqueRoutes);
 
 
-const PORT = process.env.PORT || 22;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`http://localhost:${PORT}/`);
 });

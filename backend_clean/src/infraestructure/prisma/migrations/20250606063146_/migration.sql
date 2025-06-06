@@ -1,6 +1,12 @@
 -- CreateEnum
 CREATE TYPE "TipoUsuario" AS ENUM ('ADMIN', 'OPERADOR');
 
+-- CreateEnum
+CREATE TYPE "TipoPessoa" AS ENUM ('CLIENTE', 'FORNECEDOR');
+
+-- CreateEnum
+CREATE TYPE "TipoMovimentacao" AS ENUM ('ENTRADA', 'SAIDA', 'TRANSFERENCIA');
+
 -- CreateTable
 CREATE TABLE "Produto" (
     "id" TEXT NOT NULL,
@@ -9,15 +15,14 @@ CREATE TABLE "Produto" (
     "precoVenda" DOUBLE PRECISION NOT NULL,
     "precoCompra" DOUBLE PRECISION NOT NULL,
     "descricao" TEXT NOT NULL,
-    "idCategoria" TEXT NOT NULL,
-    "quantidadeEstoque" INTEGER NOT NULL,
+    "idCategoria" INTEGER NOT NULL,
 
     CONSTRAINT "Produto_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Categoria" (
-    "id" TEXT NOT NULL,
+    "id" SERIAL NOT NULL,
     "nome" TEXT NOT NULL,
 
     CONSTRAINT "Categoria_pkey" PRIMARY KEY ("id")
@@ -26,7 +31,7 @@ CREATE TABLE "Categoria" (
 -- CreateTable
 CREATE TABLE "MovimentacaoEstoque" (
     "id" TEXT NOT NULL,
-    "tipo" TEXT NOT NULL,
+    "tipoMovimentacao" "TipoMovimentacao" NOT NULL,
     "quantidade" INTEGER NOT NULL,
     "data" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "idProduto" TEXT NOT NULL,
@@ -43,8 +48,7 @@ CREATE TABLE "Usuario" (
     "idPessoa" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "senhaHash" TEXT NOT NULL,
-    "tipoUsuario" TEXT NOT NULL,
-    "dataCadastro" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "tipoUsuario" "TipoUsuario" NOT NULL,
 
     CONSTRAINT "Usuario_pkey" PRIMARY KEY ("id")
 );
@@ -53,7 +57,7 @@ CREATE TABLE "Usuario" (
 CREATE TABLE "Pessoa" (
     "id" TEXT NOT NULL,
     "nome" TEXT NOT NULL,
-    "dataCadastro" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "tipoPessoa" "TipoPessoa" NOT NULL,
 
     CONSTRAINT "Pessoa_pkey" PRIMARY KEY ("id")
 );

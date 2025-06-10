@@ -32,7 +32,7 @@ export class CategoriaController{
 
     async getById(req: Request, res:Response){
         const { id } = req.params
-        const categoria = await getByIdCategoria.execute(Number(id))
+        const categoria = await getByIdCategoria.execute({ id: Number(id) })
         res.json(categoria)
     }
 
@@ -49,8 +49,9 @@ export class CategoriaController{
 
     async delete(req: Request, res:Response){
         const {id} = req.params
+        
         try{
-            await deleteCategoria.execute(Number(id))
+            await deleteCategoria.execute({ id: Number(id) })
             res.status(200).json({message: `Categoria deletada com sucesso`})
 
         }catch(err: any){

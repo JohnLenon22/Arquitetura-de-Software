@@ -1,4 +1,3 @@
-import {Produto} from '@prisma/client'
 import { IProdutoRepository } from "../../../domain/repositories/IProdutoRepository";
 
 export class GetProduto{

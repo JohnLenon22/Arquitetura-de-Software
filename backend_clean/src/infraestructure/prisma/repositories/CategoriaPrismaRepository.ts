@@ -12,18 +12,18 @@ export class CategoriaPrismaRepository implements ICategoriaRepository {
     }
 
     async findById(id: number): Promise<Categoria | null>{
-        const categoria = await prisma.categoria.findUnique({where:{id}})
+        const categoria = await prisma.categoria.findUnique({where:{id: id}})
         return categoria ? new Categoria(
-            categoria.id,
-            categoria.nome
+            categoria.nome,
+            categoria.id
         ):null;
     }
 
     async findAll(): Promise<Categoria[]>{
         const categorias = await prisma.categoria.findMany()
         return categorias.map((c: {id: number, nome: string}) => new Categoria(
+            c.nome,
             c.id,
-            c.nome
         ))   
     }
 

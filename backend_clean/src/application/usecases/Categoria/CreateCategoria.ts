@@ -1,13 +1,20 @@
 import { ICategoriaRepository } from "../../../domain/repositories/ICategoriaRepository";
 import { Categoria } from "../../../domain/entities/Categoria";
-export class CreateCategoria{
+import { UseCase } from "../UseCase";
+import { CreateCategoriaInputDto } from "../../dto/Categoria/CreateCategoriaInputDto";
+import { CreateCategoriaOutputDto } from "../../dto/Categoria/CreateCategoriaOutputDto";
+
+export class CreateCategoria implements UseCase<CreateCategoriaInputDto, CreateCategoriaOutputDto>{
     constructor(private categoriaRep: ICategoriaRepository){}
 
-        async execute(nome: string): Promise<void>{
-            const categoria = new Categoria(
-                0,
-                nome
-            )
-            await this.categoriaRep.create(categoria);
-        }
+    async execute(InputDTO: CreateCategoriaInputDto): Promise<CreateCategoriaOutputDto>{
+        const categoria = new Categoria(
+            InputDTO.nome,
+        )
+        await this.categoriaRep.create(categoria);
+
+        const OutputDTO: CreateCategoriaOutputDto = {id: categoria.id!}
+
+        return OutputDTO
+    }
 }

@@ -2,7 +2,7 @@ export class Produto {
     constructor(
         public readonly id: string,
         public nome: string,
-        public dataCadastro: Date,
+        public dataCadastro: Date = new Date(),
         public precoVenda: number,
         public precoCompra: number,
         public descricao: string,

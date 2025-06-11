@@ -1,4 +1,9 @@
 export type CreateArmazenamentoInputDto = {
     nome: string;
-    descricao: string;
+    endereco: string;
+    responsavel: string;
+}
+
+export type CreateArmazenamentoOutputDto = {
+    id: string;
 }

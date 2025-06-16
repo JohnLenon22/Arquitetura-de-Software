@@ -1,5 +1,5 @@
 export type DeleteLocalArmazenamentoInputDto= {
-    id: number
+    id: string
 }
 
 export type DeleteLocalArmazenamentoOutputDto= {

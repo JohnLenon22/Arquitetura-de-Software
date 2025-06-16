@@ -1,12 +1,17 @@
 import { ICategoriaRepository } from "../../../domain/repositories/ICategoriaRepository";
+import { UpdateCategoriaInputDto } from "../../dto/Categoria/UpdateCategoriaDto";
+import { UpdateCategoriaOutputDto } from "../../dto/Categoria/UpdateCategoriaDto";
 import { Categoria } from "../../../domain/entities/Categoria";
-
-export class UpdateCategoria{
+import { UseCase } from "../UseCase";
+export class UpdateCategoria implements UseCase<UpdateCategoriaInputDto, UpdateCategoriaOutputDto>{
     constructor(private categoriaRep: ICategoriaRepository){}
     
-    async execute(id: number, nome: string){
-        const categoria = new Categoria(nome, id);
-        await this.categoriaRep.update(id, categoria);
+    async execute(InputDTO: UpdateCategoriaInputDto): Promise<UpdateCategoriaOutputDto>{
+        const categoria = new Categoria(InputDTO.nome)
+        await this.categoriaRep.update(InputDTO.id, categoria);
 
+        const OutputDTO: UpdateCategoriaOutputDto = {message: `Categoria ${categoria.nome} atualizada com sucesso`};
+        return OutputDTO;
     }
+        
 }

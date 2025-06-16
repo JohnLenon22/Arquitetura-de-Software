@@ -1,12 +1,17 @@
 import { IMovimentacaoEstoqueRepository } from "../../../domain/repositories/IMovimentaoEstoqueRepository";
+import { UpdateMovimentacoesEstoqueInputDto } from "../../dto/MovimentaçãoEstoque/UpdateMovimentacoesEstoqueDto";
+import { UpdateMovimentacoesEstoqueOutputDto } from "../../dto/MovimentaçãoEstoque/UpdateMovimentacoesEstoqueDto";
 import { MovimentacaoEstoque } from "../../../domain/entities/MovimentacaoEstoque";
 import { TipoMovimentacao } from "@prisma/client";
-
-export class UpdateMovimentacaoEstoque{
+import { UseCase } from "../UseCase";
+export class UpdateMovimentacaoEstoque implements UseCase<UpdateMovimentacoesEstoqueInputDto, UpdateMovimentacoesEstoqueOutputDto>{
     constructor(private movimentacaoEstoqueRep: IMovimentacaoEstoqueRepository){}
     
-        async execute(id: string, tipoMovimentacao: TipoMovimentacao , quantidade: number, data: Date, idProduto: string, idUsuario: string, idUsuarioMovimentacao: string, idLocalArmazenamento: string){
-            const movimentacaoEstoque = new MovimentacaoEstoque( id, idProduto, idUsuario,idUsuarioMovimentacao, idLocalArmazenamento, tipoMovimentacao, quantidade, data)
-            await this.movimentacaoEstoqueRep.update(id, movimentacaoEstoque);
+        async execute(InputDTO: UpdateMovimentacoesEstoqueInputDto): Promise<UpdateMovimentacoesEstoqueOutputDto>{
+            const movimentacaoEstoque = new MovimentacaoEstoque( InputDTO.id, InputDTO.idProduto, InputDTO.idUsuario, InputDTO.idUsuarioMovimentacao, InputDTO.idLocalArmazenamento, InputDTO.tipoMovimentacao, InputDTO.quantidade, InputDTO.data)
+            await this.movimentacaoEstoqueRep.update(InputDTO.id, movimentacaoEstoque);
+
+            const OutputDTO: UpdateMovimentacoesEstoqueOutputDto = {message: `Movimentação de ID:${InputDTO.id} atualizada com sucesso`};
+            return OutputDTO;
         }
 }

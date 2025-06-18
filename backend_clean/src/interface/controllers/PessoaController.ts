@@ -18,30 +18,38 @@ export class PessoaController{
     async create(req: Request, res:Response){
         const {nome, tipoPessoa} = req.body
         try{
-            await createPessoa.execute(nome, tipoPessoa)
-            res.status(201).json({message: `Pessoa criada com sucesso`})
+            const pessoa = await createPessoa.execute({nome, tipoPessoa})
+            res.status(201).json(pessoa.message)
         }catch(err: any){
             res.status(400).json({error: err.message})
         }
     }
 
     async list(req: Request, res:Response){
-        const pessoas = await getPessoa.execute()
-        res.json(pessoas)
+        try{
+            const pessoas = await getPessoa.execute()
+            res.json(pessoas)
+        }catch(err: any){
+            res.status(400).json({error: err.message})
+        }    
     }
 
     async getById(req: Request, res:Response){
         const {id} = req.params
-        const pessoa= await getByIdPessoa.execute(id)
-        res.json(pessoa)
+        try{
+            const pessoa= await getByIdPessoa.execute({id})
+            res.json(pessoa)
+        }catch(err: any){
+            res.status(400).json({error: err.message})
+        } 
     }
 
     async update(req: Request, res:Response){
         const { id } = req.params
-        const { idPessoa, idMovimentacao } = req.body
+        const { nome, tipoPessoa } = req.body
         try{
-            await updatePessoa.execute(id,  idPessoa, idMovimentacao )
-            res.status(200).json({message: `Pessoa atualizada com sucesso`})
+            const pessoa = await updatePessoa.execute({id,  nome, tipoPessoa })
+            res.status(200).json(pessoa.message)
         }catch(err: any){
             res.status(400).json({error: err.message})
         }
@@ -50,8 +58,8 @@ export class PessoaController{
     async delete(req: Request, res:Response){
         const {id} = req.params
         try{
-            await deletePessoa.execute(id)
-            res.status(200).json({message: `Pessoa deletada com sucesso`})
+            const pessoa = await deletePessoa.execute({id})
+            res.status(200).json(pessoa.message)
 
         }catch(err: any){
             res.status(400).json({ error: err.message });

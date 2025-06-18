@@ -8,5 +8,5 @@ export type CreateProdutoInputDto = {
 }
 
 export type CreateProdutoOutputDto = {
-    id: string
+    message: string
 }

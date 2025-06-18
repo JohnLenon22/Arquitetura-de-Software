@@ -1,7 +1,15 @@
+import { TipoMovimentacao } from "@prisma/client";
+
 export type GetByIdMovimentacaoEstoqueInputDto = {
     id: string;
 }
 
 export type GetByIdMovimentacaoEstoqueOutputDto = {
-    id: string;
-}
+    idProduto: string,
+    idUsuario: string,
+    idLocalArmazenamento: string,
+    idUsuarioMovimentacao: string,
+    tipoMovimentacao: TipoMovimentacao,
+    quantidade: number,
+    data: Date 
+}[]

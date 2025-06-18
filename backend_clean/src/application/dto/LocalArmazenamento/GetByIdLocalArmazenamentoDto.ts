@@ -2,5 +2,7 @@ export type GetByIdLocalArmazenamentoInputDto = {
     id: string;
 }
 export type GetByIdLocalArmazenamentoOutputDto = {
-    message: string
+    nome: string;
+    endereco: string;
+    responsavel: string;
 }

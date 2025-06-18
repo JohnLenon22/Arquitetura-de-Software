@@ -18,30 +18,39 @@ export class CategoriaController{
     async create(req: Request, res:Response){
         const { nome } = req.body
         try{
-            await createCategoria.execute(nome)
-            res.status(201).json({message: `Categoria criada com sucesso`})
+            const result = await createCategoria.execute(nome)
+            res.status(201).json(result.message)
         }catch(err: any){
             res.status(400).json({error: err.message})
         }
     }
 
     async list(req: Request, res:Response){
-        const categorias = await getCategoria.execute()
-        res.json(categorias)
+        try{
+            const categorias = await getCategoria.execute()
+            res.json(categorias)
+        }catch(err: any){
+            res.status(400).json({error: err.message})
+        }
     }
 
     async getById(req: Request, res:Response){
         const { id } = req.params
-        const categoria = await getByIdCategoria.execute({ id: Number(id) })
-        res.json(categoria)
+        try{
+            const categoria = await getByIdCategoria.execute({ id: Number(id) })
+            res.json(categoria)
+        }catch(err: any){
+            res.status(400).json({error: err.message})
+        }
+        
     }
 
     async update(req: Request, res:Response){
         const { id } = req.params
         const { nome } = req.body
         try{
-            await updateCategoria.execute(Number(id), nome)
-            res.status(200).json({message: `Categoria atualizada com sucesso`})
+            const categoria = await updateCategoria.execute({ id: Number(id), nome })
+            res.status(200).json(categoria.message)
         }catch(err: any){
             res.status(400).json({error: err.message})
         }
@@ -51,8 +60,8 @@ export class CategoriaController{
         const {id} = req.params
         
         try{
-            await deleteCategoria.execute({ id: Number(id) })
-            res.status(200).json({message: `Categoria deletada com sucesso`})
+            const categoria = await deleteCategoria.execute({ id: Number(id) })
+            res.status(200).json(categoria.message)
 
         }catch(err: any){
             res.status(400).json({ error: err.message });

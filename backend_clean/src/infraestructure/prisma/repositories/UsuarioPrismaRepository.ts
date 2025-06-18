@@ -8,6 +8,7 @@ export class UsuarioPrismaRepository implements IUsuarioRepository {
         await prisma.usuario.create({
             data: {
                 id: usuario.id,
+                nome: usuario.nome,
                 idPessoa: usuario.idPessoa,
                 email: usuario.email,
                 senhaHash: usuario.senhaHash,
@@ -18,8 +19,13 @@ export class UsuarioPrismaRepository implements IUsuarioRepository {
 
     async findAll(): Promise<Usuario[]>{
         const usuarios = await prisma.usuario.findMany();
-        return usuarios.map((user: { id: string; idPessoa: string; email: string; senhaHash: string, tipoUsuario: TipoUsuario}) => new Usuario(
-            user.id,user.idPessoa, user.email, user.senhaHash, user.tipoUsuario
+        return usuarios.map((user: { id: string; nome: string; idPessoa: string; email: string; senhaHash: string, tipoUsuario: TipoUsuario}) => new Usuario(
+            user.id,
+            user.nome,
+            user.idPessoa, 
+            user.email, 
+            user.senhaHash, 
+            user.tipoUsuario
         ));
 
     }
@@ -27,7 +33,12 @@ export class UsuarioPrismaRepository implements IUsuarioRepository {
     async findById(id: string): Promise<Usuario | null>{
         const usuario = await prisma.usuario.findUnique({where:{id}});
         return usuario ? new Usuario(
-            usuario.id, usuario.idPessoa, usuario.email, usuario.senhaHash, usuario.tipoUsuario
+            usuario.id,
+            usuario.nome,
+            usuario.idPessoa, 
+            usuario.email, 
+            usuario.senhaHash, 
+            usuario.tipoUsuario
         ):null;
     }
 
@@ -35,6 +46,7 @@ export class UsuarioPrismaRepository implements IUsuarioRepository {
         await prisma.usuario.update({
             where: {id},
             data: {
+                nome: usuario.nome,
                 idPessoa: usuario.idPessoa,
                 email: usuario.email,
                 senhaHash: usuario.senhaHash,

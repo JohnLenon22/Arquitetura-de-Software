@@ -11,5 +11,5 @@ export type  CreateMovimentacaoEstoqueInputDto = {
 }
 
 export type  CreateMovimentacaoEstoqueOutputDto = {
-    id: string
+    message: string;
 }

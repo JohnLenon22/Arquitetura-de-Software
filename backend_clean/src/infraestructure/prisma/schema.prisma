@@ -45,6 +45,7 @@ model MovimentacaoEstoque {
 
 model Usuario {
   id                       String                 @id @default(uuid())
+  nome                     String
   idPessoa                 String                 @unique
   email                    String                 @unique
   senhaHash                String

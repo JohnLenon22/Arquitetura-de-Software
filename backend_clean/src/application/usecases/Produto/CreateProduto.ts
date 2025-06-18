@@ -1,21 +1,24 @@
 import { IProdutoRepository } from "../../../domain/repositories/IProdutoRepository";
 import { Produto } from "../../../domain/entities/Produto";
 import { randomUUID } from "crypto";
-
-export class CreateProduto {
+import { CreateProdutoInputDto, CreateProdutoOutputDto } from "../../dto/Produto/CreateProdutoDto";
+import { UseCase } from "../UseCase";
+export class CreateProduto implements UseCase<CreateProdutoInputDto, CreateProdutoOutputDto>{
     constructor(private produtoRep: IProdutoRepository){}
 
-    async execute(nome: string, dataCadastro: Date ,precoVenda: number ,precoCompra: number,descricao: string , idCategoria: number): Promise<void>{
+    async execute(InputDTO: CreateProdutoInputDto): Promise<CreateProdutoOutputDto>{
         const produto = new Produto(
             randomUUID(),
-            nome,
-            dataCadastro,
-            precoVenda,
-            precoCompra,
-            descricao,
-            idCategoria
+            InputDTO.nome,
+            InputDTO.dataCadastro,
+            InputDTO.precoVenda,
+            InputDTO.precoCompra,
+            InputDTO.descricao,
+            InputDTO.idCategoria
         )
         await this.produtoRep.create(produto);
+        const OutputDTO: CreateProdutoOutputDto = {message: `Produto criado com sucesso\n${produto.id}`}
+        return OutputDTO;
     }
 
 }

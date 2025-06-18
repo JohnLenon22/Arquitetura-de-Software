@@ -18,30 +18,39 @@ export class LocalArmazenamentoController{
     async create(req: Request, res:Response){
         const { nome, endereco, responsavel } = req.body
         try{
-            await createLocalArmazenamento.execute(nome, endereco, responsavel)
-            res.status(201).json({message: `Local Armazenamento criado com sucesso`})
+            const local = await createLocalArmazenamento.execute({nome, endereco, responsavel})
+            res.status(201).json(local.message)
         }catch(err: any){
             res.status(400).json({error: err.message})
         }
     }
 
     async list(req: Request, res:Response){
-        const LocalArmazenamentos = await getLocalArmazenamento.execute()
-        res.json(LocalArmazenamentos)
+        try{
+            const LocalArmazenamentos = await getLocalArmazenamento.execute()
+            res.json(LocalArmazenamentos)
+        }catch(err: any){
+            res.status(400).json({error: err.message})
+        }
     }
 
     async getById(req: Request, res:Response){
         const { id } = req.params
-        const localArmazenamento = await getByIdLocalArmazenamento.execute(id)
-        res.json(localArmazenamento)
+        try{
+            const localArmazenamento = await getByIdLocalArmazenamento.execute({id})
+            res.json(localArmazenamento)
+        }catch(err: any){
+            res.status(400).json({error: err.message})
+        }
+        
     }
 
     async update(req: Request, res:Response){
         const { id } = req.params
         const { nome, endereco, responsavel } = req.body
         try{
-            await updateLocalArmazenamento.execute(id, nome, endereco, responsavel)
-            res.status(200).json({message: `Local Armazenamento atualizado com sucesso`})
+            const local = await updateLocalArmazenamento.execute({id, nome, endereco, responsavel})
+            res.status(200).json(local.message)
         }catch(err: any){
             res.status(400).json({error: err.message})
         }
@@ -50,8 +59,8 @@ export class LocalArmazenamentoController{
     async delete(req: Request, res:Response){
         const {id} = req.params
         try{
-            await deleteLocalArmazenamento.execute(id)
-            res.status(200).json({message: `Local Armazenamento deletado com sucesso`})
+            const local = await deleteLocalArmazenamento.execute({id})
+            res.status(200).json(local.message)
 
         }catch(err: any){
             res.status(400).json({ error: err.message });

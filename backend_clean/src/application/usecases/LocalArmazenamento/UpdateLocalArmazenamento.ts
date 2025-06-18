@@ -10,7 +10,7 @@ export class UpdateLocalArmazenamento implements UseCase<UpdateLocalArmazenament
             const localArmazenamento = new LocalArmazenamento(InputDTO.id,InputDTO.nome, InputDTO.endereco, InputDTO.responsavel)
             await this.localArmazenamentoRep.update(InputDTO.id, localArmazenamento);
 
-            const OutputDTO: UpdateLocalArmazenamentoOutputDto = {message: `Local ${localArmazenamento.nome} atualizado com sucesso`};
+            const OutputDTO: UpdateLocalArmazenamentoOutputDto = {message: `Local armazenamento atualizado com sucesso\nID: ${localArmazenamento.nome}`};
             return OutputDTO;
         }
 }

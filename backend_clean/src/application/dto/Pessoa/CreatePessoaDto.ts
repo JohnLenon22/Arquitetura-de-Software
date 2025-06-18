@@ -6,5 +6,5 @@ export type CreatePessoaInputDto = {
 }
 
 export type CreatePessoaOutputDto = {
-    id: string
+    message: string
 }

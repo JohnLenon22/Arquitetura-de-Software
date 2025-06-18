@@ -18,36 +18,46 @@ export class ProdutoController{
     async create(req: Request, res:Response){
         const {nome,dataCadastro,precoVenda,precoCompra,descricao,idCategoria} = req.body;
         try{
-            const novoProdutoCriado = await createProduto.execute(
+            const produto= await createProduto.execute({
                 nome, 
                 dataCadastro,
                 precoVenda,
                 precoCompra,
                 descricao,
-                idCategoria)
-            res.status(201).json(novoProdutoCriado);
+                idCategoria
+            })
+            res.status(201).json(produto.message);
         }catch(err: any){
             res.status(400).json({error: err.message})
         }
     }
 
     async list(req: Request, res:Response){
-        const produtos = await getProduto.execute()
-        res.json(produtos)
+        try{
+            const produtos = await getProduto.execute()
+            res.json(produtos)
+        }catch(err: any){
+            res.status(400).json({error: err.message})
+        }
+        
     }
 
     async getById(req: Request, res:Response){
         const {id} = req.params
-        const produto = await getByIdProduto.execute(id)
-        res.json(produto)
+        try{
+            const produto = await getByIdProduto.execute({id})
+            res.json(produto)
+        }catch(err: any){
+            res.status(400).json({error: err.message})
+        }
     }
 
     async update(req: Request, res:Response){
         const {id} = req.params
         const { nome,dataCadastro,precoVenda,precoCompra,descricao,idCategoria} = req.body
         try{
-            await updateProduto.execute(id, nome,dataCadastro,precoVenda,precoCompra,descricao,idCategoria)
-            res.status(200).json({message: `Produto atualizado com sucesso`})
+            const produto = await updateProduto.execute({id, nome,dataCadastro,precoVenda,precoCompra,descricao,idCategoria})
+            res.status(200).json(produto.message)
         }catch(err: any){
             res.status(400).json({error: err.message})
         }
@@ -56,8 +66,8 @@ export class ProdutoController{
     async delete(req: Request, res:Response){
         const {id} = req.params
         try{
-            await deleteProduto.execute(id)
-            res.status(200).json({message: `Produto deletado com sucesso`})
+            const produto = await deleteProduto.execute({id})
+            res.status(200).json(produto.message)
 
         }catch(err: any){
             res.status(400).json({ error: err.message });

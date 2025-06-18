@@ -2,19 +2,22 @@ import { IPessoaRepository } from "../../../domain/repositories/IPessoaRepositor
 import { Pessoa } from "../../../domain/entities/Pessoa";
 import { randomUUID } from "crypto";
 import { TipoPessoa } from '@prisma/client'; 
+import { CreatePessoaInputDto, CreatePessoaOutputDto } from "../../dto/Pessoa/CreatePessoaDto";
+import { UseCase } from "../UseCase";
 
-
-export class CreatePessoa {
+export class CreatePessoa implements UseCase<CreatePessoaInputDto, CreatePessoaOutputDto>{
     constructor(private pessoaRep: IPessoaRepository){}
 
-    async execute(nome: string, tipoPessoa: TipoPessoa  ): Promise<void>{
+    async execute(InputDTO: CreatePessoaInputDto): Promise<CreatePessoaOutputDto>{
         const pessoa = new Pessoa(
             randomUUID(),
-            nome,
-            tipoPessoa 
+            InputDTO.nome,
+            InputDTO.tipoPessoa 
 
         )
-        return await this.pessoaRep.create(pessoa);
+        await this.pessoaRep.create(pessoa);
+        const OutputDTO: CreatePessoaOutputDto = {message: `Pessoa criada com sucesso`,}
+        return OutputDTO;
     }
 
 }

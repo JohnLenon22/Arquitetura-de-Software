@@ -18,30 +18,47 @@ export class MovimentacaoEstoqueController{
     async create(req: Request, res:Response){
         const {tipoMovimentacao , quantidade, data, idProduto, idUsuario, idUsuarioMovimentacao, idLocalArmazenamento} = req.body
         try{
-            await createMovimentacaoEstoque.execute(tipoMovimentacao , quantidade, data, idProduto, idUsuario, idUsuarioMovimentacao, idLocalArmazenamento)
-            res.status(201).json({message: `Movimentacao Estoque criada com sucesso`})
+            const movimentacao = await createMovimentacaoEstoque.execute({tipoMovimentacao , quantidade, data, idProduto, idUsuario, idUsuarioMovimentacao, idLocalArmazenamento})
+            res.status(201).json(movimentacao.message)
         }catch(err: any){
             res.status(400).json({error: err.message})
         }
     }
 
     async list(req: Request, res:Response){
-        const movimentacoesEstoque = await getMovimentacaoEstoque.execute()
-        res.json(movimentacoesEstoque)
+        try{
+            const movimentacoesEstoque = await getMovimentacaoEstoque.execute()
+            res.json(movimentacoesEstoque)
+        }catch(err: any){
+            res.status(400).json({error: err.message})
+        }
     }
 
     async getById(req: Request, res:Response){
         const {id} = req.params
-        const movimentacaoEstoque = await getByIdMovimentacaoEstoque.execute(id)
-        res.json(movimentacaoEstoque)
+        try{
+            const movimentacaoEstoque = await getByIdMovimentacaoEstoque.execute({id})
+            res.json(movimentacaoEstoque)
+        }catch(err: any){
+            res.status(400).json({error: err.message})
+        }
     }
 
     async update(req: Request, res:Response){
         const { id } = req.params
         const { tipoMovimentacao , quantidade, data, idProduto, idUsuario, idUsuarioMovimentacao, idLocalArmazenamento } = req.body
         try{
-            await updateMovimentacaoEstoque.execute(id,  tipoMovimentacao , quantidade, data, idProduto, idUsuario, idUsuarioMovimentacao, idLocalArmazenamento )
-            res.status(200).json({message: `Movimentacao Estoque atualizada com sucesso`})
+            const movimentacao = await updateMovimentacaoEstoque.execute({
+                id,
+                tipoMovimentacao,
+                quantidade,
+                data,
+                idProduto,
+                idUsuario,
+                idUsuarioMovimentacao,
+                idLocalArmazenamento
+            })
+            res.status(200).json(movimentacao.message)
         }catch(err: any){
             res.status(400).json({error: err.message})
         }
@@ -50,8 +67,8 @@ export class MovimentacaoEstoqueController{
     async delete(req: Request, res:Response){
         const {id} = req.params
         try{
-            await deleteMovimentacaoEstoque.execute(id)
-            res.status(200).json({message: `Movimentacao Estoque deletada com sucesso`})
+            const movimentacao = await deleteMovimentacaoEstoque.execute({id})
+            res.status(200).json(movimentacao.message)
 
         }catch(err: any){
             res.status(400).json({ error: err.message });

@@ -8,7 +8,7 @@ import { GetByIdUsuario } from "../../application/usecases/Usuario/GetByIdUsuari
 import { UsuarioPrismaRepository } from "../../infraestructure/prisma/repositories/UsuarioPrismaRepository";
 const usuarioRepo = new UsuarioPrismaRepository();
 
-const createProduto = new CreateUsuario(usuarioRepo);
+const createUsuario = new CreateUsuario(usuarioRepo);
 const getUsuario = new GetUsuario(usuarioRepo);
 const getByIdUsuario = new GetByIdUsuario(usuarioRepo);
 const updateUsuario = new UpdateUsuario(usuarioRepo);
@@ -16,32 +16,40 @@ const deleteUsuario = new DeleteUsuario(usuarioRepo);
 
 export class UsuarioController{
     async create(req: Request, res:Response){
-        const {idPessoa, email, senhaHash, tipoUsuario} = req.body;
+        const {nome, idPessoa, email, senhaHash, tipoUsuario} = req.body;
         try{
-            await createProduto.execute(idPessoa, email, senhaHash, tipoUsuario)
-            res.status(201).json({message: `Usuario de nome "${email}" criado com sucesso`})
+            const usuario = await createUsuario.execute({nome, idPessoa, email, senhaHash, tipoUsuario})
+            res.status(201).json(usuario.message)
         }catch(err: any){
             res.status(400).json({error: err.message})
         }
     }
 
     async list(req: Request, res:Response){
-        const produtos = await getUsuario.execute()
-        res.json(produtos)
+        try{
+            const usuarios = await getUsuario.execute()
+            res.json(usuarios)
+        }catch(err: any){
+            res.status(400).json({error: err.message})
+        }
     }
 
     async getById(req: Request, res:Response){
         const {id} = req.params
-        const produto = await getByIdUsuario.execute(id)
-        res.json(produto)
+        try{
+            const usuario = await getByIdUsuario.execute({id})
+            res.json(usuario)
+        }catch(err: any){
+            res.status(400).json({error: err.message})
+        }
     }
 
     async update(req: Request, res:Response){
         const {id} = req.params
-        const {idPessoa, email, senhaHash, tipoUsuario} = req.body
+        const { nome, idPessoa, email, senhaHash, tipoUsuario} = req.body
         try{
-            await updateUsuario.execute(id, idPessoa, email, senhaHash, tipoUsuario)
-            res.status(200).json({message: `Usuario atualizado com sucesso`})
+            const usuario = await updateUsuario.execute({id, nome, idPessoa, email, senhaHash, tipoUsuario})
+            res.status(200).json(usuario.message)
         }catch(err: any){
             res.status(400).json({error: err.message})
 
@@ -51,7 +59,7 @@ export class UsuarioController{
     async delete(req: Request, res:Response){
         const {id} = req.params
         try{
-            await deleteUsuario.execute(id)
+            await deleteUsuario.execute({id})
             res.status(200).json({message: `Usuario deletado com sucesso`})
 
         }catch(err: any){

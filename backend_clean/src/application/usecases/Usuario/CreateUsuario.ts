@@ -2,20 +2,24 @@ import { IUsuarioRepository } from "../../../domain/repositories/IUsuarioReposit
 import { Usuario } from "../../../domain/entities/Usuario";
 import { randomUUID } from "crypto";
 import { TipoUsuario } from "@prisma/client";
-
-export class CreateUsuario {
+import { CreateUsuarioInputDto, CreateUsuarioOutputDto } from "../../dto/Usuario/CreateUsuarioDto";
+import { UseCase } from "../UseCase";
+export class CreateUsuario implements UseCase<CreateUsuarioInputDto, CreateUsuarioOutputDto>{
     constructor(private usuarioRep: IUsuarioRepository){}
 
-    async execute(idPessoa: string, email: string , senhaHash:string, tipoUsuario: TipoUsuario): Promise<void>{
+    async execute(InputDTO: CreateUsuarioInputDto): Promise<CreateUsuarioOutputDto>{
         const usuario = new Usuario(
             randomUUID(),
-            idPessoa,
-            email, 
-            senhaHash,
-            tipoUsuario
+            InputDTO.nome,
+            InputDTO.idPessoa,           
+            InputDTO.email,             
+            InputDTO.senhaHash,
+            InputDTO.tipoUsuario
             
         )
         await this.usuarioRep.create(usuario);
+        const OutputDTO: CreateUsuarioOutputDto = {message: `Usuário criado com sucesso\n${usuario.id}`};
+        return OutputDTO;
     }
 
 }

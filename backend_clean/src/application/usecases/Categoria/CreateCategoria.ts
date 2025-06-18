@@ -13,8 +13,7 @@ export class CreateCategoria implements UseCase<CreateCategoriaInputDto, CreateC
         )
         await this.categoriaRep.create(categoria);
 
-        const OutputDTO: CreateCategoriaOutputDto = {id: categoria.id!}
-
+        const OutputDTO: CreateCategoriaOutputDto = {message: `Categoria criada com sucesso`};
         return OutputDTO
     }
 }

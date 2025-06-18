@@ -5,5 +5,5 @@ export type CreateLocalArmazenamentoInputDto = {
 }
 
 export type CreateLocalArmazenamentoOutputDto = {
-    id: string;
+    message: string;
 }

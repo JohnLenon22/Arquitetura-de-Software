@@ -10,4 +10,4 @@ export type ListMovimentacaoEstoqueOutputDto = {
     tipoMovimentacao: TipoMovimentacao,
     quantidade: number,
     data: Date 
-}[]
+}[];

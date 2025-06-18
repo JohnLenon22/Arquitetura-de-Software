@@ -7,9 +7,13 @@ export class GetByIdLocalArmazenamento implements UseCase<GetByIdLocalArmazename
     constructor(private localArmazenamentoRep: ILocalArmazenamentoRepository){}
     
         async execute(InputDTO: GetByIdLocalArmazenamentoInputDto): Promise<GetByIdLocalArmazenamentoOutputDto>{
-            await this.localArmazenamentoRep.findById(InputDTO.id);
-
-            const OutputDTO: GetByIdLocalArmazenamentoOutputDto = {message: `Local Armazenamento com ID:${InputDTO.id} encontrado com sucesso`}
-            return OutputDTO;
+            const local = await this.localArmazenamentoRep.findById(InputDTO.id);
+            if(local){
+                const OutputDTO: GetByIdLocalArmazenamentoOutputDto = {nome: local.nome, endereco: local.endereco, responsavel: local.responsavel};
+                return OutputDTO;
+            }else{
+                throw new Error('Local não encontrado');
+            }
+            
         }
 }

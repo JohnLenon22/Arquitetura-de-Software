@@ -1,12 +1,15 @@
 import { IPessoaRepository } from "../../../domain/repositories/IPessoaRepository";
 import { Pessoa } from "../../../domain/entities/Pessoa";
 import { TipoPessoa } from "@prisma/client";
-
-export class UpdatePessoa {
+import { UpdatePessoaInputDto, UpdatePessoaOutputDto } from "../../dto/Pessoa/UpdatePessoaDto";
+import { UseCase } from "../UseCase";
+export class UpdatePessoa implements UseCase<UpdatePessoaInputDto, UpdatePessoaOutputDto>{
     constructor(private pessoaRep: IPessoaRepository){}
 
-    async execute(id:string, nome: string, tipoPessoa: TipoPessoa){
-        const pessoa = new Pessoa(id, nome, tipoPessoa)
-        return await this.pessoaRep.update(id, pessoa)
+    async execute(InputDTO: UpdatePessoaInputDto): Promise<UpdatePessoaOutputDto>{
+        const pessoa = new Pessoa(InputDTO.id, InputDTO.nome, InputDTO.tipoPessoa)
+        await this.pessoaRep.update(InputDTO.id, pessoa)
+        const OutputDTO: UpdatePessoaOutputDto = {message: `Pessoa atualizada com sucesso\nID: ${pessoa.id}`}
+        return OutputDTO;
     }
 }

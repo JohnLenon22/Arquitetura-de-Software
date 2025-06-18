@@ -18,30 +18,38 @@ export class PessoaMovimentacaoController{
     async create(req: Request, res:Response){
         const {idPessoa, idMovimentacao} = req.body
         try{
-            await createPessoaMovimentacao.execute(idPessoa, idMovimentacao)
-            res.status(201).json({message: `PessoaMovimentacao criado com sucesso`})
+            const pessoa = await createPessoaMovimentacao.execute({idPessoa, idMovimentacao})
+            res.status(201).json(pessoa.message)
         }catch(err: any){
             res.status(400).json({error: err.message})
         }
     }
 
     async list(req: Request, res:Response){
-        const pessoasMovimentacao = await getPessoaMovimentacao.execute()
-        res.json(pessoasMovimentacao)
+        try{
+            const pessoasMovimentacao = await getPessoaMovimentacao.execute()
+            res.json(pessoasMovimentacao)
+        }catch(err: any){
+            res.status(400).json({error: err.message})
+        }
     }
 
     async getById(req: Request, res:Response){
         const {id} = req.params
-        const pessoaMovimentacao = await getByIdPessoaMovimentacao.execute(id)
-        res.json(pessoaMovimentacao)
+        try{
+            const pessoaMovimentacao = await getByIdPessoaMovimentacao.execute({id})
+            res.json(pessoaMovimentacao)
+        }catch(err: any){
+            res.status(400).json({error: err.message})
+        }
     }
 
     async update(req: Request, res:Response){
         const { id } = req.params
         const { idPessoa, idMovimentacao } = req.body
         try{
-            await updatePessoaMovimentacao.execute(id,  idPessoa, idMovimentacao )
-            res.status(200).json({message: `Pessoa Movimentação atualizado com sucesso`})
+            const pessoa = await updatePessoaMovimentacao.execute({id, idPessoa, idMovimentacao })
+            res.status(200).json(pessoa.message)
         }catch(err: any){
             res.status(400).json({error: err.message})
         }
@@ -50,8 +58,8 @@ export class PessoaMovimentacaoController{
     async delete(req: Request, res:Response){
         const {id} = req.params
         try{
-            await deletePessoaMovimentacao.execute(id)
-            res.status(200).json({message: `Pessoa Movimentação  deletado com sucesso`})
+            const pessoa = await deletePessoaMovimentacao.execute({id})
+            res.status(200).json(pessoa.message)
 
         }catch(err: any){
             res.status(400).json({ error: err.message });

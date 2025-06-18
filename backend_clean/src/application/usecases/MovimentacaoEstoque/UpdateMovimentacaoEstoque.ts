@@ -7,11 +7,20 @@ import { UseCase } from "../UseCase";
 export class UpdateMovimentacaoEstoque implements UseCase<UpdateMovimentacoesEstoqueInputDto, UpdateMovimentacoesEstoqueOutputDto>{
     constructor(private movimentacaoEstoqueRep: IMovimentacaoEstoqueRepository){}
     
-        async execute(InputDTO: UpdateMovimentacoesEstoqueInputDto): Promise<UpdateMovimentacoesEstoqueOutputDto>{
-            const movimentacaoEstoque = new MovimentacaoEstoque( InputDTO.id, InputDTO.idProduto, InputDTO.idUsuario, InputDTO.idUsuarioMovimentacao, InputDTO.idLocalArmazenamento, InputDTO.tipoMovimentacao, InputDTO.quantidade, InputDTO.data)
-            await this.movimentacaoEstoqueRep.update(InputDTO.id, movimentacaoEstoque);
+    async execute(InputDTO: UpdateMovimentacoesEstoqueInputDto): Promise<UpdateMovimentacoesEstoqueOutputDto>{
+        const movimentacaoEstoque = new MovimentacaoEstoque( 
+            InputDTO.id, 
+            InputDTO.idProduto, 
+            InputDTO.idUsuario, 
+            InputDTO.idUsuarioMovimentacao,
+            InputDTO.idLocalArmazenamento, 
+            InputDTO.tipoMovimentacao, 
+            InputDTO.quantidade, 
+            InputDTO.data
+        );
+        await this.movimentacaoEstoqueRep.update(InputDTO.id, movimentacaoEstoque);
 
-            const OutputDTO: UpdateMovimentacoesEstoqueOutputDto = {message: `Movimentação de ID:${InputDTO.id} atualizada com sucesso`};
-            return OutputDTO;
-        }
+        const OutputDTO: UpdateMovimentacoesEstoqueOutputDto = {message: `Movimentação atualizada com sucesso\nID:${InputDTO.id}`};
+        return OutputDTO;
+    }
 }

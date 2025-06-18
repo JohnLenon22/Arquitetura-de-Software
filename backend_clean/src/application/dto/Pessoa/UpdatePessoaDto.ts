@@ -1,10 +1,11 @@
 import { TipoPessoa } from "@prisma/client";
 
-export type GetByIdPessoaInputDto = {
+export type UpdatePessoaInputDto = {
     id: string;
-}
-
-export type GetByIdPessoaOutputDto = {
     nome: string;
     tipoPessoa: TipoPessoa
+}
+
+export type UpdatePessoaOutputDto = {
+    message: string;
 }

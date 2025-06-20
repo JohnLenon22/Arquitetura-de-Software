@@ -4,7 +4,6 @@ export type  CreateMovimentacaoEstoqueInputDto = {
     idProduto: string,
     idUsuario: string,
     idLocalArmazenamento: string,
-    idUsuarioMovimentacao: string,
     tipoMovimentacao: TipoMovimentacao,
     quantidade: number,
     data: Date 

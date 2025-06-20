@@ -7,11 +7,10 @@ import { pessoaMovimentacaoRoutes } from "./interface/routes/pessoaMovimentacaoR
 import { localArmazenamentoRoutes } from "./interface/routes/localArmazenamentoRoutes";
 import { movimentacaoEstoqueRoutes } from "./interface/routes/movimentaoEstoqueRoutes";
 
-const cors = require('cors');
+
 const app = express();
-app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
 
 app.use("/users", usuarioRoutes);
 app.use("/products", produtoRoutes);

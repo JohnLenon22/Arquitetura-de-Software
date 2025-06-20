@@ -15,7 +15,7 @@ export class CreatePessoaMovimentacao implements UseCase<CreatePessoaMovimentaca
             InputDTO.idMovimentacao
         )
         await this.pessoaMovimentacaoRep.create(pessoaMovimentacao);
-        const OutputDTO: CreatePessoaMovimentacaoOutputDto = {message: `Pessoa criada com sucesso`};
+        const OutputDTO: CreatePessoaMovimentacaoOutputDto = {message: `Pessoa criada com sucesso\n ID: ${pessoaMovimentacao.id}`};
         return OutputDTO;
     }
 

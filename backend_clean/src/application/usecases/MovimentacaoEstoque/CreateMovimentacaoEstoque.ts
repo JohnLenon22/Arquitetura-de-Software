@@ -15,7 +15,6 @@ export class CreateMovimentacaoEstoque implements UseCase<CreateMovimentacaoEsto
             randomUUID(),
             InputDTO.idProduto, 
             InputDTO.idUsuario,
-            InputDTO.idUsuarioMovimentacao,
             InputDTO.idLocalArmazenamento,
             InputDTO.tipoMovimentacao,
             InputDTO.quantidade,
@@ -23,7 +22,7 @@ export class CreateMovimentacaoEstoque implements UseCase<CreateMovimentacaoEsto
         )
         await this.movimentacaoEstoqueRep.create(movimentacaoEstoque);
 
-        const OutputDTO: CreateMovimentacaoEstoqueOutputDto = {message : `Movimentação bem sucedida`};
+        const OutputDTO: CreateMovimentacaoEstoqueOutputDto = {message : `Movimentação bem sucedida\n ID: ${movimentacaoEstoque.id}`};
         return OutputDTO;
     }
 }

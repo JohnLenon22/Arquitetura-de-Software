@@ -17,7 +17,7 @@ export class CreateProduto implements UseCase<CreateProdutoInputDto, CreateProdu
             InputDTO.idCategoria
         )
         await this.produtoRep.create(produto);
-        const OutputDTO: CreateProdutoOutputDto = {message: `Produto criado com sucesso\n${produto.id}`}
+        const OutputDTO: CreateProdutoOutputDto = {message: `Produto criado com sucesso\n ID: ${produto.id}`}
         return OutputDTO;
     }
 

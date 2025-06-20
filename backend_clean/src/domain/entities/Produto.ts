@@ -9,6 +9,9 @@ export class Produto {
         public idCategoria: number
 
     ){
+
         if (precoVenda && precoCompra < 0) throw new Error("Preço inválido");
+        if(!nome || nome.trim() === "" ) throw new Error("O nome do produto não pode ser vazio");
+        
     }
 }   

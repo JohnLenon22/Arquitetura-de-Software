@@ -18,7 +18,7 @@ export class CreateUsuario implements UseCase<CreateUsuarioInputDto, CreateUsuar
             
         )
         await this.usuarioRep.create(usuario);
-        const OutputDTO: CreateUsuarioOutputDto = {message: `Usuário criado com sucesso\n${usuario.id}`};
+        const OutputDTO: CreateUsuarioOutputDto = {message: `Usuário criado com sucesso\n ID: ${usuario.id}`};
         return OutputDTO;
     }
 

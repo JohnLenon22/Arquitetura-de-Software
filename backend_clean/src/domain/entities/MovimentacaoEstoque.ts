@@ -6,7 +6,6 @@ export class MovimentacaoEstoque{
         public readonly idProduto: string,
         public readonly idUsuario: string,
         public readonly idLocalArmazenamento: string,
-        public readonly idUsuarioMovimentacao: string,
         public tipoMovimentacao: TipoMovimentacao,
         public quantidade: number,
         public data: Date = new Date() 

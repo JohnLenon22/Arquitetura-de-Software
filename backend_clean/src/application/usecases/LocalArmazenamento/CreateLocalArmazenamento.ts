@@ -15,7 +15,7 @@ export class CreateLocalArmazenamento implements UseCase<CreateLocalArmazenament
             )
             await this.localArmazenamentoRep.create(localArmazenamento);
 
-            const OutputDTO: CreateLocalArmazenamentoOutputDto = {message: `Local armazenamento criado com sucesso\nID: ${localArmazenamento.id}`};
+            const OutputDTO: CreateLocalArmazenamentoOutputDto = {message: `Local armazenamento criado com sucesso\n ID: ${localArmazenamento.id}`};
             return OutputDTO;
         }
 }

@@ -33,12 +33,10 @@ model MovimentacaoEstoque {
   data                   DateTime               @default(now())
   idProduto              String
   idUsuario              String
-  idUsuarioMovimentacao  String
   idLocalArmazenamento   String
 
   produto                Produto                @relation(fields: [idProduto], references: [id])
-  usuario                Usuario                @relation("Criador", fields: [idUsuario], references: [id])
-  usuarioMovimentacao    Usuario                @relation("Executor", fields: [idUsuarioMovimentacao], references: [id])
+  usuario                Usuario                @relation("Executor", fields: [idUsuario], references: [id])
   localArmazenamento     LocalArmazenamento     @relation(fields: [idLocalArmazenamento], references: [id])
   pessoasMovimentacao    PessoaMovimentacao[]
 }
@@ -52,7 +50,6 @@ model Usuario {
   tipoUsuario              TipoUsuario            // 'ADMIN' | 'OPERADOR'
   
   pessoa                   Pessoa                 @relation(fields: [idPessoa], references: [id])
-  movimentacoesCriadas     MovimentacaoEstoque[]  @relation("Criador")
   movimentacoesExecutadas  MovimentacaoEstoque[]  @relation("Executor")
 }
 
@@ -61,7 +58,7 @@ model Pessoa {
   nome                String
   tipoPessoa          TipoPessoa            // 'CLIENTE' | 'FORNECEDOR'                
   usuario             Usuario?
-  movimentacoes       PessoaMovimentacao[]
+  movimentacoes       PessoaMovimentacao[] 
 }
 
 model PessoaMovimentacao {

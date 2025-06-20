@@ -6,5 +6,9 @@ export class Pessoa{
         public nome: string,
         public tipoPessoa: TipoPessoa
 
-    ){}
+    ){
+        if(!nome || nome.trim() === "" ){
+            throw new Error("O nome da pessoa não pode ser vazio");
+        }
+    }
 }

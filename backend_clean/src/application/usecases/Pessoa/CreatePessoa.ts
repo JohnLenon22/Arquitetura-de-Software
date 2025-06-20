@@ -16,7 +16,7 @@ export class CreatePessoa implements UseCase<CreatePessoaInputDto, CreatePessoaO
 
         )
         await this.pessoaRep.create(pessoa);
-        const OutputDTO: CreatePessoaOutputDto = {message: `Pessoa criada com sucesso`,}
+        const OutputDTO: CreatePessoaOutputDto = {message: `Pessoa criada com sucesso\n ID: ${pessoa.id}`,}
         return OutputDTO;
     }
 

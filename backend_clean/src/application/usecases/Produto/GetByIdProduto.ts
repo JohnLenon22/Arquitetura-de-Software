@@ -9,6 +9,7 @@ export class GetByIdProduto implements UseCase<GetByIdProdutoInputDto, GetByIdPr
         if(produto){
             const OutputDTO: GetByIdProdutoOutputDto = {
                 nome: produto.nome,
+                quantidade: produto.quantidade,
                 dataCadastro: produto.dataCadastro,
                 precoVenda: produto.precoVenda,
                 precoCompra: produto.precoCompra,

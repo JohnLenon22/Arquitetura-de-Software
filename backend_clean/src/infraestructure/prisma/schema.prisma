@@ -10,6 +10,7 @@ datasource db {
 model Produto {
   id            String                @id @default(uuid())
   nome          String
+  quantidade    Int                   @default(0)
   dataCadastro  DateTime              @default(now())
   precoVenda    Float
   precoCompra   Float
@@ -22,7 +23,7 @@ model Produto {
 
 model Categoria {
   id       Int     @id @default(autoincrement())
-  nome     String  @unique
+  nome     String  
   produtos Produto[]
 }
 
@@ -33,23 +34,23 @@ model MovimentacaoEstoque {
   data                   DateTime               @default(now())
   idProduto              String
   idUsuario              String
+  idPessoa               String
   idLocalArmazenamento   String
 
   produto                Produto                @relation(fields: [idProduto], references: [id])
   usuario                Usuario                @relation("Executor", fields: [idUsuario], references: [id])
+  pessoa                 Pessoa                 @relation("Pessoa", fields: [idPessoa], references: [id])
   localArmazenamento     LocalArmazenamento     @relation(fields: [idLocalArmazenamento], references: [id])
-  pessoasMovimentacao    PessoaMovimentacao[]
-}
+  pessoasMovimentacao    PessoaMovimentacao[] 
+} 
 
 model Usuario {
   id                       String                 @id @default(uuid())
   nome                     String
-  idPessoa                 String                 @unique
   email                    String                 @unique
   senhaHash                String
   tipoUsuario              TipoUsuario            // 'ADMIN' | 'OPERADOR'
   
-  pessoa                   Pessoa                 @relation(fields: [idPessoa], references: [id])
   movimentacoesExecutadas  MovimentacaoEstoque[]  @relation("Executor")
 }
 
@@ -57,8 +58,9 @@ model Pessoa {
   id                  String                @id @default(uuid())
   nome                String
   tipoPessoa          TipoPessoa            // 'CLIENTE' | 'FORNECEDOR'                
-  usuario             Usuario?
-  movimentacoes       PessoaMovimentacao[] 
+
+  movimentacoes        PessoaMovimentacao[] 
+  movimentacoesEstoque MovimentacaoEstoque[] @relation("Pessoa")
 }
 
 model PessoaMovimentacao {

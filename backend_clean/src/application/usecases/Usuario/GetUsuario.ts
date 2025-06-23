@@ -10,7 +10,6 @@ export class GetUsuario implements UseCase<ListUsuarioInputDto, ListUsuarioOutpu
         const OutputDTO: ListUsuarioOutputDto = usuarios.map( usuario => ({
             id: usuario.id,
             nome: usuario.nome,
-            idPessoa: usuario.idPessoa,          
             email: usuario.email,
             senhaHash: usuario.senhaHash,
             tipoUsuario: usuario.tipoUsuario

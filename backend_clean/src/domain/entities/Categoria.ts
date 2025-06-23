@@ -1,9 +1,9 @@
 export class Categoria {
     constructor(
         public nome: string,
-        public readonly id?: number 
+        public id?: number,
     ) {
-        if(!nome || nome.trim() === "" ){
+        if(!nome) {
             throw new Error("O nome da categoria não pode ser vazio");
         }
     }

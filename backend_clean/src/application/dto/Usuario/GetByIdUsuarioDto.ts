@@ -6,7 +6,6 @@ export type GetByIdUsuarioInputDto = {
 
 export type GetByIdUsuarioOutputDto = {
     nome: string;
-    idPessoa: string;
     email: string;
     senhaHash: string;
     tipoUsuario: TipoUsuario;

@@ -16,9 +16,9 @@ const deleteUsuario = new DeleteUsuario(usuarioRepo);
 
 export class UsuarioController{
     async create(req: Request, res:Response){
-        const {nome, idPessoa, email, senhaHash, tipoUsuario} = req.body;
+        const {nome, email, senhaHash, tipoUsuario} = req.body;
         try{
-            const usuario = await createUsuario.execute({nome, idPessoa, email, senhaHash, tipoUsuario})
+            const usuario = await createUsuario.execute({nome, email, senhaHash, tipoUsuario})
             res.status(201).json(usuario.message)
         }catch(err: any){
             res.status(400).json({error: err.message})
@@ -46,9 +46,9 @@ export class UsuarioController{
 
     async update(req: Request, res:Response){
         const {id} = req.params
-        const { nome, idPessoa, email, senhaHash, tipoUsuario} = req.body
+        const { nome, email, senhaHash, tipoUsuario} = req.body
         try{
-            const usuario = await updateUsuario.execute({id, nome, idPessoa, email, senhaHash, tipoUsuario})
+            const usuario = await updateUsuario.execute({id, nome, email, senhaHash, tipoUsuario})
             res.status(200).json(usuario.message)
         }catch(err: any){
             res.status(400).json({error: err.message})

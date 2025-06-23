@@ -3,12 +3,13 @@ import { ICategoriaRepository } from "../../../domain/repositories/ICategoriaRep
 import { prisma } from "../client";
 
 export class CategoriaPrismaRepository implements ICategoriaRepository {
-    async create(categoria: Categoria): Promise<void>{
-        await prisma.categoria.create({
+    async create(categoria: Categoria): Promise<Categoria>{
+        const newCategoria = await prisma.categoria.create({
             data:{
                 nome: categoria.nome
             }
         })
+        return new Categoria(newCategoria.nome, newCategoria.id);
     }
 
     async findById(id: number): Promise<Categoria | null>{

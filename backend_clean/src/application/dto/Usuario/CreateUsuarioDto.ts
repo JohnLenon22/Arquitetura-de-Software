@@ -1,8 +1,7 @@
 import { TipoUsuario } from "@prisma/client";
 
 export type CreateUsuarioInputDto = {
-    nome: string;
-    idPessoa: string;           
+    nome: string;        
     email: string;             
     senhaHash: string;
     tipoUsuario: TipoUsuario;

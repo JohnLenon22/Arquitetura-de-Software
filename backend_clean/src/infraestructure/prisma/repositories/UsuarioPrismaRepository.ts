@@ -9,7 +9,6 @@ export class UsuarioPrismaRepository implements IUsuarioRepository {
             data: {
                 id: usuario.id,
                 nome: usuario.nome,
-                idPessoa: usuario.idPessoa,
                 email: usuario.email,
                 senhaHash: usuario.senhaHash,
                 tipoUsuario: usuario.tipoUsuario
@@ -19,10 +18,9 @@ export class UsuarioPrismaRepository implements IUsuarioRepository {
 
     async findAll(): Promise<Usuario[]>{
         const usuarios = await prisma.usuario.findMany();
-        return usuarios.map((user: { id: string; nome: string; idPessoa: string; email: string; senhaHash: string, tipoUsuario: TipoUsuario}) => new Usuario(
+        return usuarios.map((user: { id: string; nome: string; email: string; senhaHash: string, tipoUsuario: TipoUsuario}) => new Usuario(
             user.id,
             user.nome,
-            user.idPessoa, 
             user.email, 
             user.senhaHash, 
             user.tipoUsuario
@@ -35,7 +33,6 @@ export class UsuarioPrismaRepository implements IUsuarioRepository {
         return usuario ? new Usuario(
             usuario.id,
             usuario.nome,
-            usuario.idPessoa, 
             usuario.email, 
             usuario.senhaHash, 
             usuario.tipoUsuario
@@ -47,13 +44,13 @@ export class UsuarioPrismaRepository implements IUsuarioRepository {
             where: {id},
             data: {
                 nome: usuario.nome,
-                idPessoa: usuario.idPessoa,
                 email: usuario.email,
                 senhaHash: usuario.senhaHash,
                 tipoUsuario: usuario.tipoUsuario
             }
         });
     }
+    
 
     async delete(id:string): Promise<void>{
         await prisma.usuario.delete({where:{id}})

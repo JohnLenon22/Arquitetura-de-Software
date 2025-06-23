@@ -1,5 +1,6 @@
 export type CreateProdutoInputDto = {
     nome: string;
+    quantidade: number;
     dataCadastro: Date;
     precoVenda: number;
     precoCompra: number;

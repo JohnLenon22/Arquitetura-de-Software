@@ -8,7 +8,7 @@ export class UpdateUsuario implements UseCase<UpdateUsuarioInputDto, UpdateUsuar
     constructor(private usuarioRep: IUsuarioRepository){}
 
     async execute(InputDTO: UpdateUsuarioInputDto): Promise<UpdateUsuarioOutputDto>{
-        const usuario  = new Usuario( InputDTO.id, InputDTO.nome, InputDTO.idPessoa, InputDTO.email , InputDTO.senhaHash, InputDTO.tipoUsuario )
+        const usuario  = new Usuario( InputDTO.id, InputDTO.nome, InputDTO.email , InputDTO.senhaHash, InputDTO.tipoUsuario )
         await this.usuarioRep.update(InputDTO.id, usuario);
         const OutputDTO: UpdateUsuarioOutputDto = {message: ` Usuario atualizado com sucesso\nID: ${InputDTO.id}`};
         return OutputDTO;

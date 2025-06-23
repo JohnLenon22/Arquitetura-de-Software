@@ -7,6 +7,7 @@ export type GetByIdMovimentacaoEstoqueInputDto = {
 export type GetByIdMovimentacaoEstoqueOutputDto = {
     idProduto: string,
     idUsuario: string,
+    idPessoa: string,
     idLocalArmazenamento: string,
     tipoMovimentacao: TipoMovimentacao,
     quantidade: number,

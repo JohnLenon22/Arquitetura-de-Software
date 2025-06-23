@@ -4,4 +4,5 @@ export type CreateCategoriaInputDto = {
 
 export type CreateCategoriaOutputDto = {
     message: string;
+    
 }

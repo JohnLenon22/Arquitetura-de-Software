@@ -10,6 +10,7 @@ export class GetProduto implements UseCase<ListProdutoInputDto, ListProdutoOutpu
         const OutputDTO: ListProdutoOutputDto = produtos.map( produto =>({
             id: produto.id,
             nome: produto.nome,
+            quantidade: produto.quantidade,
             dataCadastro: produto.dataCadastro,
             precoVenda: produto.precoVenda,
             precoCompra: produto.precoCompra,

@@ -11,6 +11,7 @@ export class GetMovimentacaoEstoque implements UseCase<GetByIdMovimentacaoEstoqu
             id: m.id,
             idProduto: m.idProduto,
             idUsuario: m.idUsuario,
+            idPessoa: m.idPessoa,
             idLocalArmazenamento: m.idLocalArmazenamento,
             tipoMovimentacao: m.tipoMovimentacao,
             quantidade: m.quantidade,

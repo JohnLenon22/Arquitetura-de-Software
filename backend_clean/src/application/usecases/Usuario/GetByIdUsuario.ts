@@ -12,7 +12,6 @@ export class GetByIdUsuario implements UseCase<GetByIdUsuarioInputDto, GetByIdUs
         if(usuario){
             const OutputDTO: GetByIdUsuarioOutputDto = {
                 nome: usuario.nome,
-                idPessoa: usuario.idPessoa,
                 email: usuario.email,
                 senhaHash: usuario.senhaHash,
                 tipoUsuario: usuario.tipoUsuario,

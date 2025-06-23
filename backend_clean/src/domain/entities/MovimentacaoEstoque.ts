@@ -5,6 +5,7 @@ export class MovimentacaoEstoque{
         public readonly id: string,
         public readonly idProduto: string,
         public readonly idUsuario: string,
+        public readonly idPessoa: string,
         public readonly idLocalArmazenamento: string,
         public tipoMovimentacao: TipoMovimentacao,
         public quantidade: number,

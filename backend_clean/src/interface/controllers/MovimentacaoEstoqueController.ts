@@ -8,17 +8,22 @@ import { DeleteMovimentacaoEstoque } from "../../application/usecases/Movimentac
 import { MovimentacaoEstoquePrismaRepository } from "../../infraestructure/prisma/repositories/MovimentacaoEstoquePrismaRepository";
 const movimentacaoEstoqueRepo = new MovimentacaoEstoquePrismaRepository();
 
-const createMovimentacaoEstoque = new CreateMovimentacaoEstoque(movimentacaoEstoqueRepo);
+import { ProdutoPrismaRepository } from "../../infraestructure/prisma/repositories/ProdutoPrismaRepository";
+const produtoRepo = new ProdutoPrismaRepository();
+
+const createMovimentacaoEstoque = new CreateMovimentacaoEstoque(movimentacaoEstoqueRepo, produtoRepo);
 const getMovimentacaoEstoque = new GetMovimentacaoEstoque(movimentacaoEstoqueRepo);
 const getByIdMovimentacaoEstoque = new GetByIdMovimentacaoEstoque(movimentacaoEstoqueRepo);
 const updateMovimentacaoEstoque = new UpdateMovimentacaoEstoque(movimentacaoEstoqueRepo);
 const deleteMovimentacaoEstoque = new DeleteMovimentacaoEstoque(movimentacaoEstoqueRepo);
 
 export class MovimentacaoEstoqueController{
+
     async create(req: Request, res:Response){
-        const {tipoMovimentacao , quantidade, data, idProduto, idUsuario, idLocalArmazenamento} = req.body
+        const {tipoMovimentacao , quantidade, data, idProduto, idUsuario, idPessoa, idLocalArmazenamento} = req.body
         try{
-            const movimentacao = await createMovimentacaoEstoque.execute({tipoMovimentacao , quantidade, data, idProduto, idUsuario, idLocalArmazenamento})
+            const movimentacao = await createMovimentacaoEstoque.execute({tipoMovimentacao , quantidade, data, idProduto, idUsuario, idPessoa, idLocalArmazenamento})
+            
             res.status(201).json(movimentacao.message)
         }catch(err: any){
             res.status(400).json({error: err.message})
@@ -46,7 +51,7 @@ export class MovimentacaoEstoqueController{
 
     async update(req: Request, res:Response){
         const { id } = req.params
-        const { tipoMovimentacao , quantidade, data, idProduto, idUsuario, idLocalArmazenamento } = req.body
+        const { tipoMovimentacao , quantidade, data, idProduto, idUsuario, idPessoa, idLocalArmazenamento } = req.body
         try{
             const movimentacao = await updateMovimentacaoEstoque.execute({
                 id,
@@ -55,6 +60,7 @@ export class MovimentacaoEstoqueController{
                 data,
                 idProduto,
                 idUsuario,
+                idPessoa,
                 idLocalArmazenamento
             })
             res.status(200).json(movimentacao.message)

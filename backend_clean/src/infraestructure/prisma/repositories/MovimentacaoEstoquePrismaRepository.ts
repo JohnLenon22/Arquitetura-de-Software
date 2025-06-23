@@ -10,6 +10,7 @@ export class MovimentacaoEstoquePrismaRepository implements IMovimentacaoEstoque
                 id: crypto.randomUUID(),
                 idProduto: movimentacaoEstoque.idProduto,
                 idUsuario: movimentacaoEstoque.idUsuario,
+                idPessoa: movimentacaoEstoque.idPessoa,
                 idLocalArmazenamento: movimentacaoEstoque.idLocalArmazenamento,
                 tipoMovimentacao: movimentacaoEstoque.tipoMovimentacao,
                 quantidade: movimentacaoEstoque.quantidade,
@@ -23,6 +24,7 @@ export class MovimentacaoEstoquePrismaRepository implements IMovimentacaoEstoque
             movimentacaoEstoque.id,
             movimentacaoEstoque.idProduto,
             movimentacaoEstoque.idUsuario,
+            movimentacaoEstoque.idPessoa,
             movimentacaoEstoque.idLocalArmazenamento,
             movimentacaoEstoque.tipoMovimentacao,
             movimentacaoEstoque.quantidade,
@@ -31,10 +33,11 @@ export class MovimentacaoEstoquePrismaRepository implements IMovimentacaoEstoque
     }
     async findAll(): Promise<MovimentacaoEstoque[]>{
         const movimentacoesEstoque = await prisma.movimentacaoEstoque.findMany();
-        return movimentacoesEstoque.map((m: { id: string; idProduto: string; idUsuario: string, idLocalArmazenamento: string, tipoMovimentacao: TipoMovimentacao, quantidade: number, data: Date}) => new MovimentacaoEstoque(
+        return movimentacoesEstoque.map((m: { id: string; idProduto: string; idUsuario: string, idPessoa: string, idLocalArmazenamento: string, tipoMovimentacao: TipoMovimentacao, quantidade: number, data: Date}) => new MovimentacaoEstoque(
             m.id, 
             m.idProduto, 
             m.idUsuario, 
+            m.idPessoa,
             m.idLocalArmazenamento, 
             m.tipoMovimentacao, 
             m.quantidade, 
@@ -47,6 +50,7 @@ export class MovimentacaoEstoquePrismaRepository implements IMovimentacaoEstoque
             data:{
                 idProduto: movimentacaoEstoque.idProduto,
                 idUsuario: movimentacaoEstoque.idUsuario,
+                idPessoa: movimentacaoEstoque.idPessoa,
                 idLocalArmazenamento: movimentacaoEstoque.idLocalArmazenamento,
                 tipoMovimentacao: movimentacaoEstoque.tipoMovimentacao,
                 quantidade: movimentacaoEstoque.quantidade,

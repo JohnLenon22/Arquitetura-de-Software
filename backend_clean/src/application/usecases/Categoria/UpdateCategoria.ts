@@ -10,7 +10,7 @@ export class UpdateCategoria implements UseCase<UpdateCategoriaInputDto, UpdateC
         const categoria = new Categoria(InputDTO.nome)
         await this.categoriaRep.update(InputDTO.id, categoria);
 
-        const OutputDTO: UpdateCategoriaOutputDto = {message: `Categoria atualizada com sucesso\nID: ${categoria.nome}`};
+        const OutputDTO: UpdateCategoriaOutputDto = {message: `Categoria atualizada com sucesso\nID: ${InputDTO.id}`};
         return OutputDTO;
     }
         

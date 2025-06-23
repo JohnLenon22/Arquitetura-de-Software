@@ -10,6 +10,7 @@ export class GetByIdMovimentacaoEstoque implements UseCase<GetByIdMovimentacaoEs
             const OutputDTO:GetByIdMovimentacaoEstoqueOutputDto = [{
                 idProduto: movimentacao.idProduto,
                 idUsuario: movimentacao.idUsuario,
+                idPessoa: movimentacao.idPessoa,
                 idLocalArmazenamento: movimentacao.idLocalArmazenamento,
                 tipoMovimentacao: movimentacao.tipoMovimentacao,
                 quantidade: movimentacao.quantidade,

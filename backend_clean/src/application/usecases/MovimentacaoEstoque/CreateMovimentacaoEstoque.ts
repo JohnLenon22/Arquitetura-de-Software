@@ -1,28 +1,49 @@
-import { IMovimentacaoEstoqueRepository } from "../../../domain/repositories/IMovimentaoEstoqueRepository";
-import { MovimentacaoEstoque } from "../../../domain/entities/MovimentacaoEstoque";
-import { randomUUID } from "crypto";
 import { TipoMovimentacao } from "@prisma/client";
-import { CreateMovimentacaoEstoqueInputDto } from "../../dto/MovimentaçãoEstoque/CreateMovimentacaoEstoqueInputDto";
-import { CreateMovimentacaoEstoqueOutputDto } from "../../dto/MovimentaçãoEstoque/CreateMovimentacaoEstoqueInputDto";
-
 import { UseCase } from "../UseCase";
+import { CreateMovimentacaoEstoqueInputDto, CreateMovimentacaoEstoqueOutputDto } from "../../dto/MovimentaçãoEstoque/CreateMovimentacaoEstoqueInputDto";
+import { IMovimentacaoEstoqueRepository } from "../../../domain/repositories/IMovimentaoEstoqueRepository";
+import { IProdutoRepository } from "../../../domain/repositories/IProdutoRepository";
 
 export class CreateMovimentacaoEstoque implements UseCase<CreateMovimentacaoEstoqueInputDto, CreateMovimentacaoEstoqueOutputDto>{
-    constructor(private movimentacaoEstoqueRep: IMovimentacaoEstoqueRepository){}
+    constructor(
+        private movimentacaoEstoqueRep: IMovimentacaoEstoqueRepository,
+        private produtoRep: IProdutoRepository
+    ){}
     
     async execute(InputDTO: CreateMovimentacaoEstoqueInputDto): Promise<CreateMovimentacaoEstoqueOutputDto>{
-        const movimentacaoEstoque = new MovimentacaoEstoque(
-            randomUUID(),
-            InputDTO.idProduto, 
-            InputDTO.idUsuario,
-            InputDTO.idLocalArmazenamento,
-            InputDTO.tipoMovimentacao,
-            InputDTO.quantidade,
-            InputDTO.data
-        )
-        await this.movimentacaoEstoqueRep.create(movimentacaoEstoque);
+       const produto = await this.produtoRep.findById(InputDTO.idProduto);
 
-        const OutputDTO: CreateMovimentacaoEstoqueOutputDto = {message : `Movimentação bem sucedida\n ID: ${movimentacaoEstoque.id}`};
+        if (!produto) {
+            throw new Error('Produto não encontrado');
+        }
+
+        let novaQuantidade = produto.quantidade;
+
+        if (InputDTO.tipoMovimentacao === 'ENTRADA') {
+            novaQuantidade += InputDTO.quantidade;
+        } else if (InputDTO.tipoMovimentacao === 'SAIDA') {
+            if (produto.quantidade < InputDTO.quantidade) {
+                throw new Error('Estoque insuficiente');
+            }
+            novaQuantidade -= InputDTO.quantidade;
+        }
+
+        //Atualiza a quantidade no banco
+        await this.produtoRep.updateQuantidade(InputDTO.idProduto, novaQuantidade);
+
+        //Depois cria a movimentação
+        await this.movimentacaoEstoqueRep.create({
+            id: crypto.randomUUID(),
+            tipoMovimentacao: InputDTO.tipoMovimentacao,
+            quantidade: InputDTO.quantidade,
+            idProduto: InputDTO.idProduto,
+            idUsuario: InputDTO.idUsuario,
+            idPessoa: InputDTO.idPessoa,
+            idLocalArmazenamento: InputDTO.idLocalArmazenamento,
+            data: InputDTO.data ?? new Date()
+        });
+
+        const OutputDTO: CreateMovimentacaoEstoqueOutputDto = {message : `Movimentação bem sucedida`};
         return OutputDTO;
     }
 }

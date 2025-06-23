@@ -7,7 +7,7 @@ export class UpdateProduto implements UseCase<UpdateProdutoInputDto,UpdateProdut
     constructor(private produtoRep: IProdutoRepository){}
 
     async execute(InputDTO: UpdateProdutoInputDto): Promise<UpdateProdutoOutputDto>{
-        const produto = new Produto(InputDTO.id,InputDTO.nome,InputDTO.dataCadastro,InputDTO.precoVenda,InputDTO.precoCompra,InputDTO.descricao, InputDTO.idCategoria)
+        const produto = new Produto(InputDTO.id,InputDTO.nome,InputDTO.quantidade,InputDTO.dataCadastro,InputDTO.precoVenda,InputDTO.precoCompra,InputDTO.descricao, InputDTO.idCategoria)
         await this.produtoRep.update(InputDTO.id, produto)
         const OutputDTO: UpdateProdutoOutputDto = {message: `Produto atualizado com sucesso\nID: ${produto.id}`}
         return OutputDTO;

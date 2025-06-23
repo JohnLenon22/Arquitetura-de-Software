@@ -4,6 +4,7 @@ export type UpdateMovimentacoesEstoqueInputDto = {
     id: string,
     idProduto: string,
     idUsuario: string,
+    idPessoa: string,
     idLocalArmazenamento: string,
     tipoMovimentacao: TipoMovimentacao,
     quantidade: number,

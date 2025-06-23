@@ -8,6 +8,7 @@ export class ProdutoPrismaRepository implements IProdutoRepository {
             data: {
                 id: produto.id,
                 nome: produto.nome,
+                quantidade: produto.quantidade,
                 dataCadastro: produto.dataCadastro,
                 precoVenda: produto.precoVenda,
                 precoCompra: produto.precoCompra,
@@ -19,8 +20,15 @@ export class ProdutoPrismaRepository implements IProdutoRepository {
 
     async findAll(): Promise<Produto[]>{
         const produtos = await prisma.produto.findMany();
-        return produtos.map((p: { id: string; nome: string; dataCadastro: Date; precoVenda: number; precoCompra: number; descricao: string | null; idCategoria: number }) => new Produto(
-            p.id, p.nome, p.dataCadastro, p.precoVenda, p.precoCompra, p.descricao || ``, p.idCategoria
+        return produtos.map((p: { id: string; nome: string; quantidade: number; dataCadastro: Date; precoVenda: number; precoCompra: number; descricao: string | null; idCategoria: number }) => new Produto(
+            p.id, 
+            p.nome, 
+            p.quantidade,
+            p.dataCadastro, 
+            p.precoVenda, 
+            p.precoCompra, 
+            p.descricao || ``, 
+            p.idCategoria
         ));
 
     }
@@ -28,7 +36,14 @@ export class ProdutoPrismaRepository implements IProdutoRepository {
     async findById(id: string): Promise<Produto | null>{
         const produto = await prisma.produto.findUnique({where:{id}});
         return produto ? new Produto(
-            produto.id, produto.nome, produto.dataCadastro, produto.precoVenda, produto.precoCompra, produto.descricao || ``, produto.idCategoria
+            produto.id, 
+            produto.nome, 
+            produto.quantidade,
+            produto.dataCadastro, 
+            produto.precoVenda, 
+            produto.precoCompra, 
+            produto.descricao || ``, 
+            produto.idCategoria
         ):null;
     }
 
@@ -37,12 +52,20 @@ export class ProdutoPrismaRepository implements IProdutoRepository {
             where: {id},
             data: {
                 nome: produto.nome,
+                quantidade: produto.quantidade,
                 dataCadastro: produto.dataCadastro,
                 precoVenda: produto.precoVenda,
                 precoCompra: produto.precoCompra,
                 descricao: produto.descricao,
                 idCategoria: produto.idCategoria
             }
+        });
+    }
+
+    async updateQuantidade(id: string, novaQuantidade: number): Promise<void> {
+        await prisma.produto.update({
+            where: { id },
+            data: {quantidade: novaQuantidade}
         });
     }
 

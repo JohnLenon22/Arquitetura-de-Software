@@ -9,11 +9,12 @@ export class CreateCategoria implements UseCase<CreateCategoriaInputDto, CreateC
 
     async execute(InputDTO: CreateCategoriaInputDto): Promise<CreateCategoriaOutputDto>{
         const categoria = new Categoria(
-            InputDTO.nome
-        )
-        await this.categoriaRep.create(categoria);
+            String(InputDTO)
+        );
+        console.log(categoria)
+        const categoriaCriada = await this.categoriaRep.create(categoria);
 
-        const OutputDTO: CreateCategoriaOutputDto = {message: `Categoria criada com sucesso\n ID: ${categoria.id}`};
+        const OutputDTO: CreateCategoriaOutputDto = {message: `Categoria criada com sucesso\nNome: ${categoriaCriada.nome}`};
         return OutputDTO
     }
 }

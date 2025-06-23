@@ -10,6 +10,7 @@ export class CreateProduto implements UseCase<CreateProdutoInputDto, CreateProdu
         const produto = new Produto(
             randomUUID(),
             InputDTO.nome,
+            InputDTO.quantidade,
             InputDTO.dataCadastro,
             InputDTO.precoVenda,
             InputDTO.precoCompra,

@@ -11,7 +11,6 @@ export class CreateUsuario implements UseCase<CreateUsuarioInputDto, CreateUsuar
         const usuario = new Usuario(
             randomUUID(),
             InputDTO.nome,
-            InputDTO.idPessoa,           
             InputDTO.email,             
             InputDTO.senhaHash,
             InputDTO.tipoUsuario

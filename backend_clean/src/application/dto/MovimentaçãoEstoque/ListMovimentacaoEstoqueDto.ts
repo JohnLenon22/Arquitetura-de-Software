@@ -5,6 +5,7 @@ export type ListMovimentacaoEstoqueOutputDto = {
     id: string,
     idProduto: string,
     idUsuario: string,
+    idPessoa: string,
     idLocalArmazenamento: string,
     tipoMovimentacao: TipoMovimentacao,
     quantidade: number,

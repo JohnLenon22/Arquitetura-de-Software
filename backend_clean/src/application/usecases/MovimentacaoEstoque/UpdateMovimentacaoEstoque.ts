@@ -12,6 +12,7 @@ export class UpdateMovimentacaoEstoque implements UseCase<UpdateMovimentacoesEst
             InputDTO.id, 
             InputDTO.idProduto, 
             InputDTO.idUsuario, 
+            InputDTO.idPessoa,
             InputDTO.idLocalArmazenamento, 
             InputDTO.tipoMovimentacao, 
             InputDTO.quantidade, 

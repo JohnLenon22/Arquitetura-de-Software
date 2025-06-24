@@ -31,7 +31,6 @@ export class CreateMovimentacaoEstoque implements UseCase<CreateMovimentacaoEsto
         //Atualiza a quantidade no banco
         await this.produtoRep.updateQuantidade(InputDTO.idProduto, novaQuantidade);
 
-        //Depois cria a movimentação
         await this.movimentacaoEstoqueRep.create({
             id: crypto.randomUUID(),
             tipoMovimentacao: InputDTO.tipoMovimentacao,

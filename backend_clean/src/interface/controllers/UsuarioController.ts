@@ -4,6 +4,7 @@ import { GetUsuario } from "../../application/usecases/Usuario/GetUsuario";
 import { UpdateUsuario } from "../../application/usecases/Usuario/UpdateUsuario";
 import { DeleteUsuario } from "../../application/usecases/Usuario/DeleteUsuario";
 import { GetByIdUsuario } from "../../application/usecases/Usuario/GetByIdUsuario";
+import { LoginUsuario } from "../../application/usecases/Usuario/LoginUsuario";
 
 import { UsuarioPrismaRepository } from "../../infraestructure/prisma/repositories/UsuarioPrismaRepository";
 const usuarioRepo = new UsuarioPrismaRepository();
@@ -11,6 +12,7 @@ const usuarioRepo = new UsuarioPrismaRepository();
 const createUsuario = new CreateUsuario(usuarioRepo);
 const getUsuario = new GetUsuario(usuarioRepo);
 const getByIdUsuario = new GetByIdUsuario(usuarioRepo);
+const loginUsuario = new LoginUsuario(usuarioRepo);
 const updateUsuario = new UpdateUsuario(usuarioRepo);
 const deleteUsuario = new DeleteUsuario(usuarioRepo);
 
@@ -43,6 +45,21 @@ export class UsuarioController{
             res.status(400).json({error: err.message})
         }
     }
+
+    async login(req: Request, res: Response){
+        const { email, senhaHash } = req.body;
+        try {
+            const id = await loginUsuario.execute({ email, senhaHash });
+            if (id) {
+                res.status(200).json(id);
+            } else {
+                res.status(401).json({ error: "Credenciais inválidas" });
+            }
+        } catch (err: any) {
+            res.status(400).json({ error: err.message });
+        }
+    }
+
 
     async update(req: Request, res:Response){
         const {id} = req.params

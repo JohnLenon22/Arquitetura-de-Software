@@ -39,6 +39,17 @@ export class UsuarioPrismaRepository implements IUsuarioRepository {
         ):null;
     }
 
+    async findLogin(email: string, senhaHash: string): Promise<string | null>{
+        const usuario = await prisma.usuario.findUnique({
+            where: { email }
+        });
+        if (usuario && usuario.senhaHash === senhaHash) {
+            return usuario.id;
+        } else {
+            return null;
+        }
+    }
+
     async update(id:string, usuario: Usuario): Promise<void>{
         await prisma.usuario.update({
             where: {id},

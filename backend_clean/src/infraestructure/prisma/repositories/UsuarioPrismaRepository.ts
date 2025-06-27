@@ -44,7 +44,7 @@ export class UsuarioPrismaRepository implements IUsuarioRepository {
             where: { email }
         });
         if (usuario && usuario.senhaHash === senhaHash) {
-            return usuario.id;
+            return usuario.id, usuario.tipoUsuario;
         } else {
             return null;
         }

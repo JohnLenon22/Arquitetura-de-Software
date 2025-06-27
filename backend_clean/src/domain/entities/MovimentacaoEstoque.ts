@@ -9,9 +9,10 @@ export class MovimentacaoEstoque{
         public readonly idLocalArmazenamento: string,
         public tipoMovimentacao: TipoMovimentacao,
         public quantidade: number,
-        public data: Date = new Date() 
+        public data: Date = new Date(),
+        public readonly idLocalArmazenamentoDestino?: string
     ){
-        if (quantidade === 0) {
+        if (quantidade < 0) {
             throw new Error("Quantidade não pode ser zero")
         }
     }

@@ -19,7 +19,7 @@ export class CreateMovimentacaoEstoque implements UseCase<CreateMovimentacaoEsto
 
         let novaQuantidade = produto.quantidade;
 
-        if (InputDTO.tipoMovimentacao === 'ENTRADA') {
+        if (InputDTO.tipoMovimentacao === 'ENTRADA' || InputDTO.tipoMovimentacao === 'TRANSFERENCIA') {
             novaQuantidade += InputDTO.quantidade;
         } else if (InputDTO.tipoMovimentacao === 'SAIDA') {
             if (produto.quantidade < InputDTO.quantidade) {
@@ -28,19 +28,23 @@ export class CreateMovimentacaoEstoque implements UseCase<CreateMovimentacaoEsto
             novaQuantidade -= InputDTO.quantidade;
         }
 
-        //Atualiza a quantidade no banco
-        await this.produtoRep.updateQuantidade(InputDTO.idProduto, novaQuantidade);
+        try{
+            await this.produtoRep.updateQuantidade(InputDTO.idProduto, novaQuantidade);
 
-        await this.movimentacaoEstoqueRep.create({
-            id: crypto.randomUUID(),
-            tipoMovimentacao: InputDTO.tipoMovimentacao,
-            quantidade: InputDTO.quantidade,
-            idProduto: InputDTO.idProduto,
-            idUsuario: InputDTO.idUsuario,
-            idPessoa: InputDTO.idPessoa,
-            idLocalArmazenamento: InputDTO.idLocalArmazenamento,
-            data: InputDTO.data ?? new Date()
-        });
+            await this.movimentacaoEstoqueRep.create({
+                id: crypto.randomUUID(),
+                tipoMovimentacao: InputDTO.tipoMovimentacao,
+                quantidade: InputDTO.quantidade,
+                idProduto: InputDTO.idProduto,
+                idUsuario: InputDTO.idUsuario,
+                idPessoa: InputDTO.idPessoa,
+                idLocalArmazenamento: InputDTO.idLocalArmazenamento,
+                data: InputDTO.data ?? new Date()
+            });
+        }catch(error){
+            throw new Error('Erro ao criar movimentação de estoque');
+        }
+        
 
         const OutputDTO: CreateMovimentacaoEstoqueOutputDto = {message : `Movimentação bem sucedida`};
         return OutputDTO;

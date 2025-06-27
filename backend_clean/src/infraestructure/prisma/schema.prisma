@@ -36,6 +36,7 @@ model MovimentacaoEstoque {
   idUsuario              String
   idPessoa               String
   idLocalArmazenamento   String
+  idLocalArmazenamentoDestino            String ?
 
   produto                Produto                @relation(fields: [idProduto], references: [id])
   usuario                Usuario                @relation("Executor", fields: [idUsuario], references: [id])

@@ -5,7 +5,34 @@ import {prisma} from "../client";
 
 export class MovimentacaoEstoquePrismaRepository implements IMovimentacaoEstoqueRepository {
     async create(movimentacaoEstoque: MovimentacaoEstoque): Promise<void>{
-        await prisma.movimentacaoEstoque.create({
+        if( movimentacaoEstoque.tipoMovimentacao === TipoMovimentacao.TRANSFERENCIA){
+            await prisma.movimentacaoEstoque.create({
+                data: {
+                    id: crypto.randomUUID(),
+                    idProduto: movimentacaoEstoque.idProduto,
+                    idUsuario: movimentacaoEstoque.idUsuario,
+                    idPessoa: movimentacaoEstoque.idPessoa,
+                    idLocalArmazenamento: movimentacaoEstoque.idLocalArmazenamento,
+                    tipoMovimentacao: TipoMovimentacao.SAIDA,
+                    quantidade: movimentacaoEstoque.quantidade,
+                    data: movimentacaoEstoque.data
+                }
+            });
+
+            await prisma.movimentacaoEstoque.create({
+                data: {
+                    id: crypto.randomUUID(),
+                    idProduto: movimentacaoEstoque.idProduto,
+                    idUsuario: movimentacaoEstoque.idUsuario,
+                    idPessoa: movimentacaoEstoque.idPessoa,
+                    idLocalArmazenamento: movimentacaoEstoque.idLocalArmazenamentoDestino ?? "",
+                    tipoMovimentacao: TipoMovimentacao.ENTRADA,
+                    quantidade: movimentacaoEstoque.quantidade,
+                    data: movimentacaoEstoque.data
+                }
+            });     
+        }else{
+           await prisma.movimentacaoEstoque.create({
             data:{
                 id: crypto.randomUUID(),
                 idProduto: movimentacaoEstoque.idProduto,
@@ -16,8 +43,8 @@ export class MovimentacaoEstoquePrismaRepository implements IMovimentacaoEstoque
                 quantidade: movimentacaoEstoque.quantidade,
                 data: movimentacaoEstoque.data
             }
-        })
-    }
+        })}
+    }   
     async findById(id: string): Promise<MovimentacaoEstoque | null>{
         const movimentacaoEstoque = await prisma.movimentacaoEstoque.findUnique({where:{id}});
         return movimentacaoEstoque ? new MovimentacaoEstoque(

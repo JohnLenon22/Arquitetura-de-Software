@@ -3,12 +3,16 @@ import { UseCase } from "../UseCase";
 import { CreateMovimentacaoEstoqueInputDto, CreateMovimentacaoEstoqueOutputDto } from "../../dto/MovimentaçãoEstoque/CreateMovimentacaoEstoqueInputDto";
 import { IMovimentacaoEstoqueRepository } from "../../../domain/repositories/IMovimentaoEstoqueRepository";
 import { IProdutoRepository } from "../../../domain/repositories/IProdutoRepository";
-
+import { PrismaClient } from "@prisma/client";
+import { MovimentacaoEstoque } from "../../../domain/entities/MovimentacaoEstoque";
 export class CreateMovimentacaoEstoque implements UseCase<CreateMovimentacaoEstoqueInputDto, CreateMovimentacaoEstoqueOutputDto>{
+    private prisma = new PrismaClient();
+
     constructor(
         private movimentacaoEstoqueRep: IMovimentacaoEstoqueRepository,
         private produtoRep: IProdutoRepository
     ){}
+
     
     async execute(InputDTO: CreateMovimentacaoEstoqueInputDto): Promise<CreateMovimentacaoEstoqueOutputDto>{
        const produto = await this.produtoRep.findById(InputDTO.idProduto);
@@ -19,7 +23,7 @@ export class CreateMovimentacaoEstoque implements UseCase<CreateMovimentacaoEsto
 
         let novaQuantidade = produto.quantidade;
 
-        if (InputDTO.tipoMovimentacao === 'ENTRADA' || InputDTO.tipoMovimentacao === 'TRANSFERENCIA') {
+        if (InputDTO.tipoMovimentacao === 'ENTRADA') {
             novaQuantidade += InputDTO.quantidade;
         } else if (InputDTO.tipoMovimentacao === 'SAIDA') {
             if (produto.quantidade < InputDTO.quantidade) {
@@ -28,24 +32,30 @@ export class CreateMovimentacaoEstoque implements UseCase<CreateMovimentacaoEsto
             novaQuantidade -= InputDTO.quantidade;
         }
 
-        try{
-            await this.produtoRep.updateQuantidade(InputDTO.idProduto, novaQuantidade);
+        const movimentacao = new MovimentacaoEstoque(
+            crypto.randomUUID(),
+            InputDTO.data ?? new Date(),
+            InputDTO.idProduto,
+            InputDTO.idUsuario,
+            InputDTO.tipoMovimentacao,
+            InputDTO.quantidade,
+            InputDTO.idLocalArmazenamento,
+            InputDTO.idLocalArmazenamentoDestino,
+            InputDTO.idPessoa,
+        );
 
-            await this.movimentacaoEstoqueRep.create({
-                id: crypto.randomUUID(),
-                tipoMovimentacao: InputDTO.tipoMovimentacao,
-                quantidade: InputDTO.quantidade,
-                idProduto: InputDTO.idProduto,
-                idUsuario: InputDTO.idUsuario,
-                idPessoa: InputDTO.idPessoa,
-                idLocalArmazenamento: InputDTO.idLocalArmazenamento,
-                data: InputDTO.data ?? new Date()
+        try {
+            await this.prisma.$transaction(async (prisma) => {
+                await this.produtoRep.updateQuantidade(InputDTO.idProduto, novaQuantidade);
+                await this.movimentacaoEstoqueRep.create(movimentacao);
             });
-        }catch(error){
-            throw new Error('Erro ao criar movimentação de estoque');
+        }catch (error) {
+            console.error('Erro ao registrar movimentação:', error);
+            throw new Error("Erro ao registrar movimentação");
         }
-        
 
+
+        
         const OutputDTO: CreateMovimentacaoEstoqueOutputDto = {message : `Movimentação bem sucedida`};
         return OutputDTO;
     }

@@ -1,3 +1,4 @@
+import { json } from 'stream/consumers';
 import { Usuario } from '../../../domain/entities/Usuario';
 import {IUsuarioRepository} from '../../../domain/repositories/IUsuarioRepository';
 import {prisma} from "../client";
@@ -44,7 +45,7 @@ export class UsuarioPrismaRepository implements IUsuarioRepository {
             where: { email }
         });
         if (usuario && usuario.senhaHash === senhaHash) {
-            return usuario.id, usuario.tipoUsuario;
+            return usuario.id;
         } else {
             return null;
         }

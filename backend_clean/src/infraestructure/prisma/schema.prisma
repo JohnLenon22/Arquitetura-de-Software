@@ -17,7 +17,7 @@ model Produto {
   descricao     String
   idCategoria   Int
 
-  categoria     Categoria             @relation(fields: [idCategoria], references: [id])
+  categoria     Categoria             @relation(fields: [idCategoria], references: [id], onDelete: Cascade)
   movimentacoes MovimentacaoEstoque[]
 }
 
@@ -34,14 +34,14 @@ model MovimentacaoEstoque {
   data                   DateTime               @default(now())
   idProduto              String
   idUsuario              String
-  idPessoa               String
   idLocalArmazenamento   String
   idLocalArmazenamentoDestino            String ?
+  idPessoa               String?
 
-  produto                Produto                @relation(fields: [idProduto], references: [id])
-  usuario                Usuario                @relation("Executor", fields: [idUsuario], references: [id])
-  pessoa                 Pessoa                 @relation("Pessoa", fields: [idPessoa], references: [id])
-  localArmazenamento     LocalArmazenamento     @relation(fields: [idLocalArmazenamento], references: [id])
+  produto                Produto                @relation(fields: [idProduto], references: [id], onDelete: Cascade)
+  usuario                Usuario                @relation("Executor", fields: [idUsuario], references: [id], onDelete: Cascade)
+  pessoa                 Pessoa?                 @relation("Pessoa", fields: [idPessoa], references: [id], onDelete: Cascade)
+  localArmazenamento     LocalArmazenamento     @relation(fields: [idLocalArmazenamento], references: [id], onDelete: Cascade)
   pessoasMovimentacao    PessoaMovimentacao[] 
 } 
 
@@ -68,8 +68,8 @@ model PessoaMovimentacao {
   id              String                  @id @default(uuid())
   idPessoa        String
   idMovimentacao  String
-  pessoa          Pessoa               @relation(fields: [idPessoa], references: [id])
-  movimentacao    MovimentacaoEstoque  @relation(fields: [idMovimentacao], references: [id])
+  pessoa          Pessoa               @relation(fields: [idPessoa], references: [id], onDelete: Cascade)
+  movimentacao    MovimentacaoEstoque  @relation(fields: [idMovimentacao], references: [id], onDelete: Cascade)
 }
 
 model LocalArmazenamento {

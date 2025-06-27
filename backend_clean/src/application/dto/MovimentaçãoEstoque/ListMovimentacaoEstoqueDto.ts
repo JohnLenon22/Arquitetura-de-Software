@@ -2,12 +2,13 @@ import { TipoMovimentacao } from "@prisma/client"
 
 export type ListMovimentacaoEstoqueInputDto = void
 export type ListMovimentacaoEstoqueOutputDto = {
-    id: string,
+    data: Date,
     idProduto: string,
     idUsuario: string,
     idPessoa: string,
-    idLocalArmazenamento: string,
     tipoMovimentacao: TipoMovimentacao,
     quantidade: number,
-    data: Date 
+    idLocalArmazenamento: string,
+    idLocalArmazenamentoDestino: string, 
+    
 }[];

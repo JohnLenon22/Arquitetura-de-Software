@@ -1,13 +1,15 @@
 import { TipoMovimentacao } from "@prisma/client"
 
 export type  CreateMovimentacaoEstoqueInputDto = {
+    data: Date,
     idProduto: string,
     idUsuario: string,
     idPessoa: string,
-    idLocalArmazenamento: string,
     tipoMovimentacao: TipoMovimentacao,
     quantidade: number,
-    data: Date 
+    idLocalArmazenamento: string,
+    idLocalArmazenamentoDestino: string, 
+
 }
 
 export type  CreateMovimentacaoEstoqueOutputDto = {

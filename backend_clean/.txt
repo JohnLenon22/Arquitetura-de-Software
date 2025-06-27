@@ -1,0 +1,10 @@
+  teste TRANSFERENCIA
+  {
+    "idProduto": "3bd4484d-3517-4e31-a255-570e8cc11f08",
+    "idUsuario": "38251eab-d7e5-4c43-af1b-3f966bf59aa7",
+    "idPessoa": "2d0f303e-59c1-43a0-8f83-c30bb816f6c7",
+    "idLocalArmazenamento": "7f867ec7-9f0c-492f-86a5-c21fe2d365a0",
+    "idLocalArmazenamentoDestino": "7798643a-3699-4bcb-b5d3-11b4f1a0240d",
+    "tipoMovimentacao": "TRANSFERENCIA",
+    "quantidade": 900
+  }

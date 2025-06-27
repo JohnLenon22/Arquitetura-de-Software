@@ -10,13 +10,15 @@ export class UpdateMovimentacaoEstoque implements UseCase<UpdateMovimentacoesEst
     async execute(InputDTO: UpdateMovimentacoesEstoqueInputDto): Promise<UpdateMovimentacoesEstoqueOutputDto>{
         const movimentacaoEstoque = new MovimentacaoEstoque( 
             InputDTO.id, 
+            InputDTO.data,
             InputDTO.idProduto, 
             InputDTO.idUsuario, 
-            InputDTO.idPessoa,
-            InputDTO.idLocalArmazenamento, 
             InputDTO.tipoMovimentacao, 
-            InputDTO.quantidade, 
-            InputDTO.data
+            InputDTO.quantidade,
+            InputDTO.idLocalArmazenamento, 
+            InputDTO.idLocalArmazenamentoDestino,
+            InputDTO.idPessoa,
+            
         );
         await this.movimentacaoEstoqueRep.update(InputDTO.id, movimentacaoEstoque);
 

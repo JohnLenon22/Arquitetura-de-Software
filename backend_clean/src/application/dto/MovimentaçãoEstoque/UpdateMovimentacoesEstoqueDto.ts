@@ -8,7 +8,9 @@ export type UpdateMovimentacoesEstoqueInputDto = {
     idLocalArmazenamento: string,
     tipoMovimentacao: TipoMovimentacao,
     quantidade: number,
-    data: Date 
+    idLocalArmazenamentoDestino: string,
+    data: Date,
+
 }
 
 export type UpdateMovimentacoesEstoqueOutputDto = {

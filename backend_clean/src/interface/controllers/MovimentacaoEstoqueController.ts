@@ -20,9 +20,18 @@ const deleteMovimentacaoEstoque = new DeleteMovimentacaoEstoque(movimentacaoEsto
 export class MovimentacaoEstoqueController{
 
     async create(req: Request, res:Response){
-        const {tipoMovimentacao , quantidade, data, idProduto, idUsuario, idPessoa, idLocalArmazenamento} = req.body
+        const {tipoMovimentacao , quantidade, data, idProduto, idUsuario, idPessoa, idLocalArmazenamento, idLocalArmazenamentoDestino} = req.body
         try{
-            const movimentacao = await createMovimentacaoEstoque.execute({tipoMovimentacao , quantidade, data, idProduto, idUsuario, idPessoa, idLocalArmazenamento})
+            const movimentacao = await createMovimentacaoEstoque.execute({
+                data,
+                tipoMovimentacao , 
+                quantidade,  
+                idProduto, 
+                idUsuario, 
+                idLocalArmazenamento, 
+                idLocalArmazenamentoDestino,
+                idPessoa, 
+            })
             
             res.status(201).json(movimentacao.message)
         }catch(err: any){
@@ -51,7 +60,7 @@ export class MovimentacaoEstoqueController{
 
     async update(req: Request, res:Response){
         const { id } = req.params
-        const { tipoMovimentacao , quantidade, data, idProduto, idUsuario, idPessoa, idLocalArmazenamento } = req.body
+        const { tipoMovimentacao , quantidade, data, idProduto, idUsuario, idPessoa, idLocalArmazenamento, idLocalArmazenamentoDestino } = req.body
         try{
             const movimentacao = await updateMovimentacaoEstoque.execute({
                 id,
@@ -61,7 +70,8 @@ export class MovimentacaoEstoqueController{
                 idProduto,
                 idUsuario,
                 idPessoa,
-                idLocalArmazenamento
+                idLocalArmazenamento,
+                idLocalArmazenamentoDestino 
             })
             res.status(200).json(movimentacao.message)
         }catch(err: any){

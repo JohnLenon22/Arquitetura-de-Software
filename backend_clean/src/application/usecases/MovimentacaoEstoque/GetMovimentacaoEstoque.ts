@@ -9,13 +9,15 @@ export class GetMovimentacaoEstoque implements UseCase<GetByIdMovimentacaoEstoqu
 
         const OutputDTO: GetByIdMovimentacaoEstoqueOutputDto = movimentacoes.map(m=>({
             id: m.id,
+            data: m.data,
             idProduto: m.idProduto,
             idUsuario: m.idUsuario,
-            idPessoa: m.idPessoa,
-            idLocalArmazenamento: m.idLocalArmazenamento,
             tipoMovimentacao: m.tipoMovimentacao,
             quantidade: m.quantidade,
-            data: m.data
+            idLocalArmazenamento: m.idLocalArmazenamento,
+            idLocalArmazenamentoDestino: m.idLocalArmazenamentoDestino ?? '',
+            idPessoa: m.idPessoa ?? '',
+
         }))
 
         return OutputDTO;

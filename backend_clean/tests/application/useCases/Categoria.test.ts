@@ -1,10 +1,10 @@
-import { CreateCategoria } from "../../../../src/application/usecases/Categoria/CreateCategoria"; 
-import { GetCategoria } from "../../../../src/application/usecases/Categoria/GetCategoria";
-import { DeleteCategoria } from "../../../../src/application/usecases/Categoria/DeleteCategoria";
-import { GetByIdCategoria } from "../../../../src/application/usecases/Categoria/GetByIdCategoria";
+import { CreateCategoria } from "../../../src/application/usecases/Categoria/CreateCategoria"; 
+import { GetCategoria } from "../../../src/application/usecases/Categoria/GetCategoria";
+import { DeleteCategoria } from "../../../src/application/usecases/Categoria/DeleteCategoria";
+import { GetByIdCategoria } from "../../../src/application/usecases/Categoria/GetByIdCategoria";
 
-import { ICategoriaRepository } from "../../../../src/domain/repositories/ICategoriaRepository";
-import { Categoria } from "../../../../src/domain/entities/Categoria";
+import { ICategoriaRepository } from "../../../src/domain/repositories/ICategoriaRepository";
+import { Categoria } from "../../../src/domain/entities/Categoria";
 
 describe("Categoria", () => {
   let categoriaRepoMock!: jest.Mocked<ICategoriaRepository>;

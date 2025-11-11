@@ -6,7 +6,7 @@ export class DeleteProduto implements UseCase<DeleteProdutoInputDto, DeleteProdu
 
     async execute(InputDTO: DeleteProdutoInputDto): Promise<DeleteProdutoOutputDto>{
         await this.produtoRep.delete(InputDTO.id)
-        const OutputDTO: DeleteProdutoOutputDto = {message: `Produto deletado com sucesso`}
+        const OutputDTO: DeleteProdutoOutputDto = {message: "Produto deletado com sucesso"}
         return OutputDTO;
     }
 

@@ -15,8 +15,6 @@ describe("Produto", () => {
     let deleteProduto!: DeleteProduto;
     let getByIdProduto!: GetByIdProduto;
 
-
-
     beforeEach(() => {
         produtoRepoMock = {
             create: jest.fn(),
@@ -61,7 +59,7 @@ describe("Produto", () => {
         produtoRepoMock.create.mockResolvedValueOnce();
 
         const result = await createProduto.execute(input);
-        
+
         expect(produtoRepoMock.create).toHaveBeenCalledTimes(1);
         expect(produtoRepoMock.create).toHaveBeenCalledWith(expect.any(Produto));
         expect(result).toEqual({message: `Produto criado com sucesso\n ID: ${id}`});

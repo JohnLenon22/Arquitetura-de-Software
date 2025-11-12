@@ -40,8 +40,8 @@ describe("Produto", () => {
             nome: "Sim",
             quantidade: 10,
             dataCadastro: new Date("2022-11-11"),
-            precoCompra: 5.0,
-            precoVenda: 2.0,
+            precoVenda: 5.0,
+            precoCompra: 2.0,
             descricao: "sim",
             idCategoria: 1
         };
@@ -50,8 +50,8 @@ describe("Produto", () => {
             input.nome,
             input.quantidade,
             input.dataCadastro,
-            input.precoCompra,
             input.precoVenda,
+            input.precoCompra,
             input.descricao,
             input.idCategoria
         
@@ -62,7 +62,30 @@ describe("Produto", () => {
 
         expect(produtoRepoMock.create).toHaveBeenCalledTimes(1);
         expect(produtoRepoMock.create).toHaveBeenCalledWith(expect.any(Produto));
-        expect(result).toEqual({message: `Produto criado com sucesso\n ID: ${id}`});
+        expect(result).toEqual({message: `Produto criado com sucesso\nNome: ${produtoTest.nome}`});
+    });
+
+
+    it('deve retornar erro se preço de compra e preço de venda for menores que zero', async () => {
+        expect(() => new Produto(randomUUID(), "test 1", 1, new Date("2022-11-11"), -1.0, 0.0, "", 1)).toThrow("Preço de compra e preço de venda devem ser maiores que zero");
+    });
+
+
+    it('deve retornar erro caso preço de venda for menor que preço de compra', async () => {
+        expect(() => new Produto(randomUUID(), "test 2", 1, new Date("2022-11-11"), 1.1, 2.0, "", 1)).toThrow("O preço de venda do produto deve ser maior que o preço de compra");
+    });
+
+
+    it('deve retornar erro caso a quantidade seja menor que 0', async () => {
+        expect(() => new Produto(randomUUID(), "test 3", -1, new Date("2022-11-11"), 2.0, 1.0, "", 1)).toThrow("A quantidade do produto deve ser maior ou igual a zero");
+        expect(() => new Produto(randomUUID(), "test 4", -1.5, new Date("2022-11-11"), 3.0, 2.0, "", 1)).toThrow("A quantidade do produto deve ser maior ou igual a zero");
+    });
+
+
+    it('deve retornar erro se o nome for vazio', async () => {
+        expect(() => new Produto(randomUUID(), "", 1, new Date("2022-11-11"), 5.0, 2.0, "", 1)).toThrow("O nome do produto não pode ser vazio");
+        expect(() => new Produto(randomUUID(), "  ", 1, new Date("2022-11-11"), 5.0, 2.0, "", 1)).toThrow("O nome do produto não pode ser vazio")
+
     });
 
 

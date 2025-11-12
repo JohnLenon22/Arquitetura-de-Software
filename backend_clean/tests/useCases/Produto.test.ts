@@ -34,12 +34,11 @@ describe("Produto", () => {
     });
 
     it("deve criar um produto corretamente", async () => {
-
         const input = {
             id: randomUUID(),
             nome: "Sim",
             quantidade: 10,
-            dataCadastro: new Date("2022-11-11"),
+            dataCadastro: new Date("2025-11-11"),
             precoVenda: 5.0,
             precoCompra: 2.0,
             descricao: "sim",
@@ -82,10 +81,22 @@ describe("Produto", () => {
     });
 
 
-    it('deve retornar erro se o nome for vazio', async () => {
+    it('deve retornar erro caso nome for vazio', async () => {
         expect(() => new Produto(randomUUID(), "", 1, new Date("2022-11-11"), 5.0, 2.0, "", 1)).toThrow("O nome do produto não pode ser vazio");
         expect(() => new Produto(randomUUID(), "  ", 1, new Date("2022-11-11"), 5.0, 2.0, "", 1)).toThrow("O nome do produto não pode ser vazio")
+    });
 
+
+    it('deve retornar erro caso data seja inválida', async () => {
+        expect(() => new Produto(randomUUID(), "test1", 1, new Date("2022-21-31"), 5.0, 2.0, "", 1)).toThrow("A data de cadastro é inválida");
+        expect(() => new Produto(randomUUID(), "test2", 1, new Date("2022-11-41"), 5.0, 2.0, "", 1)).toThrow("A data de cadastro é inválida");
+        expect(() => new Produto(randomUUID(), "test3", 1, new Date("202a-11-11"), 3.0, 1.5, "", 1)).toThrow("A data de cadastro é inválida");
+    });
+
+
+    it('deve retornar erro caso data seja futura', async () => {
+        expect(() => new Produto(randomUUID(), "test1", 1, new Date("2027-11-11"), 5.0, 2.0, "", 1)).toThrow("A data de cadastro não pode ser uma data futura");
+        expect(() => new Produto(randomUUID(), "test2", 1, new Date("2025-11-13"), 5.0, 2.0, "", 1)).toThrow("A data de cadastro não pode ser uma data futura")
     });
 
 

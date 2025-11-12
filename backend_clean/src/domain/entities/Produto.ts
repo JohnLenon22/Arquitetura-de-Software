@@ -11,7 +11,7 @@ export class Produto {
 
     ){
 
-        if (precoCompra <= 0 && precoVenda <= 0){
+        if (precoCompra <= 0 || precoVenda <= 0){
             throw new Error("Preço de compra e preço de venda devem ser maiores que zero");
         } 
         if (precoVenda<precoCompra){
@@ -22,6 +22,25 @@ export class Produto {
         }
         if(!nome || nome.trim() === "" ) {
             throw new Error("O nome do produto não pode ser vazio");
+        }
+        if (!(dataCadastro instanceof Date) || isNaN(dataCadastro.getTime())) {
+            throw new Error("A data de cadastro é inválida");
+        }
+        const ano = dataCadastro.getFullYear();
+        const mes = dataCadastro.getMonth();
+        const dia = dataCadastro.getDate();
+        const reconstruida = new Date(ano, mes, dia);
+        if (
+            reconstruida.getFullYear() !== ano ||
+            reconstruida.getMonth() !== mes ||
+            reconstruida.getDate() !== dia
+        ) {
+            throw new Error("A data de cadastro é inválida");
+        }
+
+        const agora = new Date();
+        if (dataCadastro > agora) {
+            throw new Error("A data de cadastro não pode ser uma data futura");
         }
             
         

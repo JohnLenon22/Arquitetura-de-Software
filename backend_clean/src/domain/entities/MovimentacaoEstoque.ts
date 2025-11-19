@@ -14,7 +14,7 @@ export class MovimentacaoEstoque{
     ){
         if (quantidade < 0) {
             throw new Error("Quantidade não pode ser zero")
-        }
+        } 
     }
 }
 

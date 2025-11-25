@@ -1,10 +1,10 @@
-import { CreateProduto } from "../../../src/application/usecases/Produto/CreateProduto"; 
-import { GetProduto } from "../../../src/application/usecases/Produto/GetProduto"; 
-import { UpdateQuantidadeProduto } from "../../../src/application/usecases/Produto/UpdateQuantidadeProduto";
-import { DeleteProduto } from "../../../src/application/usecases/Produto/DeleteProduto"; 
-import { GetByIdProduto } from "../../../src/application/usecases/Produto/GetByIdProduto"; 
-import { IProdutoRepository } from "../../../src/domain/repositories/IProdutoRepository"; 
-import { Produto } from "../../../src/domain/entities/Produto";
+import { CreateProduto } from "../../src/application/usecases/Produto/CreateProduto"; 
+import { GetProduto } from "../../src/application/usecases/Produto/GetProduto"; 
+import { UpdateQuantidadeProduto } from "../../src/application/usecases/Produto/UpdateQuantidadeProduto";
+import { DeleteProduto } from "../../src/application/usecases/Produto/DeleteProduto"; 
+import { GetByIdProduto } from "../../src/application/usecases/Produto/GetByIdProduto"; 
+import { IProdutoRepository } from "../../src/domain/repositories/IProdutoRepository"; 
+import { Produto } from "../../src/domain/entities/Produto";
 import { randomUUID } from "crypto";
 
 describe("Produto", () => {
@@ -95,8 +95,8 @@ describe("Produto", () => {
 
 
     it('deve retornar erro caso data seja futura', async () => {
-        expect(() => new Produto(randomUUID(), "test1", 1, new Date("2027-11-11"), 5.0, 2.0, "", 1)).toThrow("A data de cadastro não pode ser uma data futura");
-        expect(() => new Produto(randomUUID(), "test2", 1, new Date("2025-11-13"), 5.0, 2.0, "", 1)).toThrow("A data de cadastro não pode ser uma data futura")
+        expect(() => new Produto(randomUUID(), "test1", 1, new Date("4027-11-11"), 5.0, 2.0, "", 1)).toThrow("A data de cadastro não pode ser uma data futura");
+        expect(() => new Produto(randomUUID(), "test2", 1, new Date("4025-11-13"), 5.0, 2.0, "", 1)).toThrow("A data de cadastro não pode ser uma data futura")
     });
 
 

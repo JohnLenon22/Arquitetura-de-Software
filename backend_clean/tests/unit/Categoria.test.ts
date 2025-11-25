@@ -1,11 +1,11 @@
-import { CreateCategoria } from "../../../src/application/usecases/Categoria/CreateCategoria"; 
-import { GetCategoria } from "../../../src/application/usecases/Categoria/GetCategoria"; 
-import { UpdateCategoria } from "../../../src/application/usecases/Categoria/UpdateCategoria";
-import { DeleteCategoria } from "../../../src/application/usecases/Categoria/DeleteCategoria"; 
-import { GetByIdCategoria } from "../../../src/application/usecases/Categoria/GetByIdCategoria"; 
+import { CreateCategoria } from "../../src/application/usecases/Categoria/CreateCategoria"; 
+import { GetCategoria } from "../../src/application/usecases/Categoria/GetCategoria"; 
+import { UpdateCategoria } from "../../src/application/usecases/Categoria/UpdateCategoria";
+import { DeleteCategoria } from "../../src/application/usecases/Categoria/DeleteCategoria"; 
+import { GetByIdCategoria } from "../../src/application/usecases/Categoria/GetByIdCategoria"; 
 
-import { ICategoriaRepository } from "../../../src/domain/repositories/ICategoriaRepository"; 
-import { Categoria } from "../../../src/domain/entities/Categoria";
+import { ICategoriaRepository } from "../../src/domain/repositories/ICategoriaRepository"; 
+import { Categoria } from "../../src/domain/entities/Categoria";
 
 describe("Categoria", () => {
   let categoriaRepoMock!: jest.Mocked<ICategoriaRepository>;
@@ -33,7 +33,7 @@ describe("Categoria", () => {
  
   it('deve criar uma categoria corretamente', async () => {
     const categoriaTest = new Categoria( "Bebidas");
-    categoriaRepoMock.create.mockResolvedValueOnce();
+    categoriaRepoMock.create.mockResolvedValueOnce(categoriaTest);
     const result = await createCategoria.execute(categoriaTest);
 
     expect(categoriaRepoMock.create).toHaveBeenCalledTimes(1);

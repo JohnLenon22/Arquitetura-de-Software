@@ -9,7 +9,7 @@ export class CategoriaPrismaRepository implements ICategoriaRepository {
                 nome: categoria.nome
             }
         })
-        return new Categoria(newCategoria.nome, newCategoria.id);
+        return new Categoria(newCategoria.nome, newCategoria.id)
     }
 
     async findById(id: number): Promise<Categoria | null>{

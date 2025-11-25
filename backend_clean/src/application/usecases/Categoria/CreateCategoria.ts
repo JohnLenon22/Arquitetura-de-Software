@@ -9,7 +9,7 @@ export class CreateCategoria implements UseCase<CreateCategoriaInputDto, CreateC
 
     async execute(InputDTO: CreateCategoriaInputDto): Promise<CreateCategoriaOutputDto>{
         const categoria = new Categoria(
-            InputDTO.nome
+            String(InputDTO.nome)
         );
         
         await this.categoriaRep.create(categoria);

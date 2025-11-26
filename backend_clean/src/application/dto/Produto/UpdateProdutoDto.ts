@@ -2,7 +2,7 @@ export type UpdateProdutoInputDto = {
     id: string;
     nome: string;
     quantidade: number;
-    dataCadastro: Date;
+    dataCadastro: Date | string;
     precoVenda: number;
     precoCompra: number;
     descricao: string;

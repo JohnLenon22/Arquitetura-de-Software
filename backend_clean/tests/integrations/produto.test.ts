@@ -1,7 +1,6 @@
 import request from "supertest"
 import { app } from "../../src/app"
 import { prisma } from "../../src/infraestructure/prisma/client"
-import { randomUUID } from "crypto"
 
 describe("Teste de Integração - Produtos", () => {
     beforeEach(async () => {
@@ -83,7 +82,7 @@ describe("Teste de Integração - Produtos", () => {
             const input = {
                 nome: "   ",
                 quantidade: 10,
-                precoVenda: 1.0,
+                precoVenda: 3.0,
                 precoCompra: 2.0,
                 descricao: "sim",
                 idCategoria: 1
@@ -96,12 +95,29 @@ describe("Teste de Integração - Produtos", () => {
         });
     
     
+        it('deve retornar erro caso data seja futura', async () => {
+            const input = {
+                nome: "asd",
+                dataCadastro: "4025-11-11",
+                quantidade: 10,
+                precoVenda: 3.0,
+                precoCompra: 2.0,
+                descricao: "sim",
+                idCategoria: 1
+            };
+
+            const res = await request(app).post("/products").send(input)
+
+            expect(res.status).toBe(400)
+            expect(res.body.error).toBe("A data de cadastro não pode ser uma data futura")
+        });
+
         it('deve retornar erro caso data seja inválida', async () => {
             const input = {
                 nome: "asd",
-                dataCadastro: new Date("20$5-11-11"),
+                dataCadastro: "20$5-11-11",
                 quantidade: 10,
-                precoVenda: 1.0,
+                precoVenda: 3.0,
                 precoCompra: 2.0,
                 descricao: "sim",
                 idCategoria: 1
@@ -114,22 +130,7 @@ describe("Teste de Integração - Produtos", () => {
         });
     
     
-        it('deve retornar erro caso data seja futura', async () => {
-            const input = {
-                nome: "asd",
-                dataCadastro: new Date("4025-11-11"),
-                quantidade: 10,
-                precoVenda: 1.0,
-                precoCompra: 2.0,
-                descricao: "sim",
-                idCategoria: 1
-            };
 
-            const res = await request(app).post("/products").send(input)
-
-            expect(res.status).toBe(400)
-            expect(res.body.error).toBe("A data de cadastro não pode ser uma data futura")
-        });
 
 
     it("Deve listar os produtos", async () => {

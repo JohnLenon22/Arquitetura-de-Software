@@ -1,9 +1,12 @@
+import { notEqual } from "assert";
+import { isDate } from "util/types";
+
 export class Produto {
     constructor(
         public readonly id: string,
         public nome: string,
         public quantidade: number,
-        public dataCadastro: Date = new Date(),
+        public dataCadastro: Date | string = new Date(),
         public precoVenda: number,
         public precoCompra: number,
         public descricao: string,
@@ -20,27 +23,16 @@ export class Produto {
         if (quantidade <= 0){
             throw new Error("A quantidade do produto deve ser maior ou igual a zero");
         }
-        if(!nome || nome.trim() === "" ) {
+        if (!nome || nome.trim() === "" ) {
             throw new Error("O nome do produto não pode ser vazio");
         }
 
-        const ano = dataCadastro.getFullYear();
-        const mes = dataCadastro.getMonth();
-        const dia = dataCadastro.getDate();
-        const reconstruida = new Date(ano, mes, dia);
-        if (
-            reconstruida.getFullYear() !== ano ||
-            reconstruida.getMonth() !== mes ||
-            reconstruida.getDate() !== dia
-        ) {
-            throw new Error("A data de cadastro é inválida");
-        }
-
-        const agora = new Date();
-        if (dataCadastro > agora) {
+        if (new Date(dataCadastro) > new Date()) {
             throw new Error("A data de cadastro não pode ser uma data futura");
         }
-            
-        
+
+        if (isNaN(new Date(dataCadastro).getTime())) {
+            throw new Error("A data de cadastro é inválida");
+        }
     }
 }   

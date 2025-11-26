@@ -5,7 +5,7 @@ export type GetByIdProdutoInputDto = {
 export type GetByIdProdutoOutputDto = {
     nome: string;
     quantidade: number;
-    dataCadastro: Date;
+    dataCadastro: Date | string;
     precoVenda: number;
     precoCompra: number;
     descricao: string;

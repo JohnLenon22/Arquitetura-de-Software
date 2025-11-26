@@ -1,0 +1,97 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL_TEST")
+}
+
+model Produto {
+  id            String                @id @default(uuid())
+  nome          String
+  quantidade    Int                   @default(0)
+  dataCadastro  DateTime              @default(now())
+  precoVenda    Float
+  precoCompra   Float
+  descricao     String
+  idCategoria   Int
+
+  categoria     Categoria             @relation(fields: [idCategoria], references: [id], onDelete: Cascade)
+  movimentacoes MovimentacaoEstoque[]
+}
+
+model Categoria {
+  id       Int     @id @default(autoincrement())
+  nome     String  
+  produtos Produto[]
+}
+
+model MovimentacaoEstoque {
+  id                     String                 @id @default(uuid())
+  tipoMovimentacao       TipoMovimentacao       // 'ENTRADA' | 'SAIDA' | 'TRANSFERENCIA'
+  quantidade             Int
+  data                   DateTime               @default(now())
+  idProduto              String
+  idUsuario              String
+  idLocalArmazenamento   String
+  idLocalArmazenamentoDestino            String ?
+  idPessoa               String?
+
+  produto                Produto                @relation(fields: [idProduto], references: [id], onDelete: Cascade)
+  usuario                Usuario                @relation("Executor", fields: [idUsuario], references: [id], onDelete: Cascade)
+  pessoa                 Pessoa?                 @relation("Pessoa", fields: [idPessoa], references: [id], onDelete: Cascade)
+  localArmazenamento     LocalArmazenamento     @relation(fields: [idLocalArmazenamento], references: [id], onDelete: Cascade)
+  pessoasMovimentacao    PessoaMovimentacao[] 
+} 
+
+model Usuario {
+  id                       String                 @id @default(uuid())
+  nome                     String
+  email                    String                 @unique
+  senhaHash                String
+  tipoUsuario              TipoUsuario            // 'ADMIN' | 'OPERADOR'
+  
+  movimentacoesExecutadas  MovimentacaoEstoque[]  @relation("Executor")
+}
+
+model Pessoa {
+  id                  String                @id @default(uuid())
+  nome                String
+  tipoPessoa          TipoPessoa            // 'CLIENTE' | 'FORNECEDOR'                
+
+  movimentacoes        PessoaMovimentacao[] 
+  movimentacoesEstoque MovimentacaoEstoque[] @relation("Pessoa")
+}
+
+model PessoaMovimentacao {
+  id              String                  @id @default(uuid())
+  idPessoa        String
+  idMovimentacao  String
+  pessoa          Pessoa               @relation(fields: [idPessoa], references: [id], onDelete: Cascade)
+  movimentacao    MovimentacaoEstoque  @relation(fields: [idMovimentacao], references: [id], onDelete: Cascade)
+}
+
+model LocalArmazenamento {
+  id             String                @id @default(uuid())
+  nome           String
+  endereco       String
+  responsavel    String
+  movimentacoes  MovimentacaoEstoque[]
+}
+
+enum TipoUsuario {
+  ADMIN
+  OPERADOR
+}
+
+enum TipoPessoa {
+  CLIENTE
+  FORNECEDOR
+}
+
+enum TipoMovimentacao {
+  ENTRADA
+  SAIDA
+  TRANSFERENCIA
+}

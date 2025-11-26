@@ -3,17 +3,17 @@ import { app } from "../../src/app"
 import { prisma } from "../../src/infraestructure/prisma/client"
 
 describe("Teste de Integração - Produtos", () => {
-    beforeEach(async () => {
-    await prisma.produto.deleteMany();
-    });
+    // beforeEach(async () => {
+    // await prisma.produto.deleteMany();
+    // });
 
-    afterAll(async () => {
-        await prisma.$disconnect();
-    });
+    // afterAll(async () => {
+    //     await prisma.$disconnect();
+    // });
 
     it("deve criar um produto", async () => {
         const input = {
-            nome: "Sim2",
+            nome: "test2",
             quantidade: 10,
             precoVenda: 5.0,
             precoCompra: 2.0,

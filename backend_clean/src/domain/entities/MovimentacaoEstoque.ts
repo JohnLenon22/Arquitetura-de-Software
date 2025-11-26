@@ -13,8 +13,14 @@ export class MovimentacaoEstoque{
         public readonly idPessoa?: string,
     ){
         if (quantidade < 0) {
-            throw new Error("Quantidade não pode ser zero")
+            throw new Error("Quantidade não pode ser menor ou igual a zero")
         } 
+        if (tipoMovimentacao != "ENTRADA" || "SAIDA" || "TRANSFERENCIA"){
+            throw new Error("O tipo de movimentação não pode ser diferente de ENTRADA/TRANSFERENCIA/SAIDA")
+        }
+        if (data > new Date()) {
+            throw new Error("A data de cadastro não pode ser uma data futura");
+        }
     }
 }
 

@@ -6,7 +6,7 @@ import { DeleteUsuario } from "../../application/usecases/Usuario/DeleteUsuario"
 import { GetByIdUsuario } from "../../application/usecases/Usuario/GetByIdUsuario";
 import { LoginUsuario } from "../../application/usecases/Usuario/LoginUsuario";
 
-import { UsuarioPrismaRepository } from "../../infraestructure/prisma/repositories/UsuarioPrismaRepository";
+import { UsuarioPrismaRepository } from "../../infraestructure/repositories/UsuarioPrismaRepository";
 const usuarioRepo = new UsuarioPrismaRepository();
 
 const createUsuario = new CreateUsuario(usuarioRepo);

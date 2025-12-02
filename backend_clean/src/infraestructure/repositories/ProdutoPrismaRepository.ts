@@ -1,6 +1,6 @@
-import { Produto } from '../../../domain/entities/Produto';
-import {IProdutoRepository} from '../../../domain/repositories/IProdutoRepository';
-import {prisma} from "../client";
+import { Produto } from '../../domain/entities/Produto';
+import {IProdutoRepository} from '../../domain/repositories/IProdutoRepository';
+import { prisma } from "../../../prisma/client";
 
 export class ProdutoPrismaRepository implements IProdutoRepository {
     async create(produto: Produto): Promise<void>{

@@ -1,7 +1,7 @@
 import { json } from 'stream/consumers';
-import { Usuario } from '../../../domain/entities/Usuario';
-import {IUsuarioRepository} from '../../../domain/repositories/IUsuarioRepository';
-import {prisma} from "../client";
+import { Usuario } from '../../domain/entities/Usuario';
+import { IUsuarioRepository } from '../../domain/repositories/IUsuarioRepository';
+import { prisma } from "../../../prisma/client";
 import { TipoUsuario } from '@prisma/client';
 
 export class UsuarioPrismaRepository implements IUsuarioRepository {

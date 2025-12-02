@@ -1,7 +1,7 @@
 import { TipoPessoa } from '@prisma/client';
-import { Pessoa } from '../../../domain/entities/Pessoa';
-import {IPessoaRepository} from '../../../domain/repositories/IPessoaRepository';
-import {prisma} from "../client";
+import { Pessoa } from '../../domain/entities/Pessoa';
+import {IPessoaRepository} from '../../domain/repositories/IPessoaRepository';
+import { prisma } from "../../../prisma/client";
 
 export class PessoaPrismaRepository implements IPessoaRepository {
     async create(pessoa: Pessoa): Promise<void>{

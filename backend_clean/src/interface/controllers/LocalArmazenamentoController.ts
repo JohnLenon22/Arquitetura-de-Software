@@ -5,7 +5,7 @@ import { CreateLocalArmazenamento } from "../../application/usecases/LocalArmaze
 import { UpdateLocalArmazenamento } from "../../application/usecases/LocalArmazenamento/UpdateLocalArmazenamento";
 import { DeleteLocalArmazenamento } from "../../application/usecases/LocalArmazenamento/DeleteLocalArmazenamento";
 
-import { LocalArmazenamentoPrismaRepository } from "../../infraestructure/prisma/repositories/LocalArmazenamentoPrismaRepository";
+import { LocalArmazenamentoPrismaRepository } from "../../infraestructure/repositories/LocalArmazenamentoPrismaRepository";
 const LocalArmazenamentoRepo = new LocalArmazenamentoPrismaRepository();
 
 const createLocalArmazenamento = new CreateLocalArmazenamento(LocalArmazenamentoRepo);

@@ -5,7 +5,7 @@ import { CreatePessoa } from "../../application/usecases/Pessoa/CreatePessoa";
 import { UpdatePessoa } from "../../application/usecases/Pessoa/UpdatePessoa";
 import { DeletePessoa } from "../../application/usecases/Pessoa/DeletePessoa";
 
-import { PessoaPrismaRepository } from "../../infraestructure/prisma/repositories/PessoaPrismaRepository";
+import { PessoaPrismaRepository } from "../../infraestructure/repositories/PessoaPrismaRepository";
 const pessoaRepo = new PessoaPrismaRepository();
 
 const createPessoa = new CreatePessoa(pessoaRepo);

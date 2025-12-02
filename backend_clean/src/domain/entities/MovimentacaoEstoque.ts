@@ -15,7 +15,7 @@ export class MovimentacaoEstoque{
         if (quantidade < 0) {
             throw new Error("Quantidade não pode ser menor ou igual a zero")
         } 
-        if (tipoMovimentacao != "ENTRADA" || "SAIDA" || "TRANSFERENCIA"){
+        if (!Object.values(TipoMovimentacao).includes(tipoMovimentacao)) {
             throw new Error("O tipo de movimentação não pode ser diferente de ENTRADA/TRANSFERENCIA/SAIDA")
         }
         if (data > new Date()) {

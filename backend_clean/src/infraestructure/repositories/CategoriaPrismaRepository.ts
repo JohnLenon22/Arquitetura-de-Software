@@ -1,6 +1,7 @@
-import { Categoria } from "../../../domain/entities/Categoria";
-import { ICategoriaRepository } from "../../../domain/repositories/ICategoriaRepository";
-import { prisma } from "../client";
+import { Categoria } from "../../domain/entities/Categoria";
+import { ICategoriaRepository } from "../../domain/repositories/ICategoriaRepository";
+import { prisma } from "../../../prisma/client"
+
 
 export class CategoriaPrismaRepository implements ICategoriaRepository {
     async create(categoria: Categoria): Promise<Categoria>{

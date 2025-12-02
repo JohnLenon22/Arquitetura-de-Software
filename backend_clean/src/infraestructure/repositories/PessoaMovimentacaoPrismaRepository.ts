@@ -1,6 +1,6 @@
-import { PessoaMovimentacao } from '../../../domain/entities/PessoaMovimentacao';
-import {IPessoaMovimentacaoRepository} from '../../../domain/repositories/IPessoaMovimentacaoRepository';
-import {prisma} from "../client";
+import { PessoaMovimentacao } from '../../domain/entities/PessoaMovimentacao';
+import {IPessoaMovimentacaoRepository} from '../../domain/repositories/IPessoaMovimentacaoRepository';
+import { prisma } from "../../../prisma/client";
 
 export class PessoaMovimentacaoPrismaRepository implements IPessoaMovimentacaoRepository {
     async create(pessoaMovimentacao: PessoaMovimentacao): Promise<void>{

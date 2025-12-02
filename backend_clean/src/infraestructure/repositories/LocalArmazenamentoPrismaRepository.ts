@@ -1,6 +1,6 @@
-import { LocalArmazenamento } from "../../../domain/entities/LocalArmazenamento";
-import { ILocalArmazenamentoRepository } from "../../../domain/repositories/ILocalArmazenamentoRepository";
-import { prisma } from "../client";
+import { LocalArmazenamento } from "../../domain/entities/LocalArmazenamento";
+import { ILocalArmazenamentoRepository } from "../../domain/repositories/ILocalArmazenamentoRepository";
+import { prisma } from "../../../prisma/client";
 
 export class LocalArmazenamentoPrismaRepository implements ILocalArmazenamentoRepository {
     async create(localArmazenamento: LocalArmazenamento): Promise<void>{

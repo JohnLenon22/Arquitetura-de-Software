@@ -5,7 +5,7 @@ import { CreatePessoaMovimentacao } from "../../application/usecases/PessoaMovim
 import { UpdatePessoaMovimentacao } from "../../application/usecases/PessoaMovimentacao/UpdatePessoaMovimentacao";
 import { DeletePessoaMovimentacao } from "../../application/usecases/PessoaMovimentacao/DeletePessoaMovimentacao";
 
-import { PessoaMovimentacaoPrismaRepository } from "../../infraestructure/prisma/repositories/PessoaMovimentacaoPrismaRepository";
+import { PessoaMovimentacaoPrismaRepository } from "../../infraestructure/repositories/PessoaMovimentacaoPrismaRepository";
 const pessoaMovimentacaoRepo = new PessoaMovimentacaoPrismaRepository();
 
 const createPessoaMovimentacao = new CreatePessoaMovimentacao(pessoaMovimentacaoRepo);

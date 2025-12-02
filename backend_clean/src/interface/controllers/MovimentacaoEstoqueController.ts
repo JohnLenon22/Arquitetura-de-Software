@@ -5,10 +5,10 @@ import { CreateMovimentacaoEstoque } from "../../application/usecases/Movimentac
 import { UpdateMovimentacaoEstoque } from "../../application/usecases/MovimentacaoEstoque/UpdateMovimentacaoEstoque";
 import { DeleteMovimentacaoEstoque } from "../../application/usecases/MovimentacaoEstoque/DeleteMovimentacaoEstoque";
 
-import { MovimentacaoEstoquePrismaRepository } from "../../infraestructure/prisma/repositories/MovimentacaoEstoquePrismaRepository";
+import { MovimentacaoEstoquePrismaRepository } from "../../infraestructure/repositories/MovimentacaoEstoquePrismaRepository";
 const movimentacaoEstoqueRepo = new MovimentacaoEstoquePrismaRepository();
 
-import { ProdutoPrismaRepository } from "../../infraestructure/prisma/repositories/ProdutoPrismaRepository";
+import { ProdutoPrismaRepository } from "../../infraestructure/repositories/ProdutoPrismaRepository";
 const produtoRepo = new ProdutoPrismaRepository();
 
 const createMovimentacaoEstoque = new CreateMovimentacaoEstoque(movimentacaoEstoqueRepo, produtoRepo);

@@ -1,4 +1,3 @@
-import { TipoMovimentacao } from "@prisma/client";
 import { UseCase } from "../UseCase";
 import { CreateMovimentacaoEstoqueInputDto, CreateMovimentacaoEstoqueOutputDto } from "../../dto/MovimentaçãoEstoque/CreateMovimentacaoEstoqueInputDto";
 import { IMovimentacaoEstoqueRepository } from "../../../domain/repositories/IMovimentaoEstoqueRepository";
@@ -6,7 +5,6 @@ import { IProdutoRepository } from "../../../domain/repositories/IProdutoReposit
 import { PrismaClient } from "@prisma/client";
 import { MovimentacaoEstoque } from "../../../domain/entities/MovimentacaoEstoque";
 export class CreateMovimentacaoEstoque implements UseCase<CreateMovimentacaoEstoqueInputDto, CreateMovimentacaoEstoqueOutputDto>{
-    private prisma = new PrismaClient();
 
     constructor(
         private movimentacaoEstoqueRep: IMovimentacaoEstoqueRepository,
@@ -45,10 +43,8 @@ export class CreateMovimentacaoEstoque implements UseCase<CreateMovimentacaoEsto
         );
 
         try {
-            await this.prisma.$transaction(async (prisma) => {
-                await this.produtoRep.updateQuantidade(InputDTO.idProduto, novaQuantidade);
-                await this.movimentacaoEstoqueRep.create(movimentacao);
-            });
+            await this.produtoRep.updateQuantidade(InputDTO.idProduto, novaQuantidade);
+            await this.movimentacaoEstoqueRep.create(movimentacao);
         }catch (error) {
             console.error('Erro ao registrar movimentação:', error);
             throw new Error("Erro ao registrar movimentação");

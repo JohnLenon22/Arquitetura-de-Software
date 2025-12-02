@@ -5,7 +5,7 @@ import { GetByIdProduto } from "../../application/usecases/Produto/GetByIdProdut
 import { UpdateProduto } from "../../application/usecases/Produto/UpdateProduto";
 import { DeleteProduto } from "../../application/usecases/Produto/DeleteProduto";
 
-import { ProdutoPrismaRepository } from "../../infraestructure/prisma/repositories/ProdutoPrismaRepository";
+import { ProdutoPrismaRepository } from "../../infraestructure/repositories/ProdutoPrismaRepository";
 import { UpdateQuantidadeProduto } from "../../application/usecases/Produto/UpdateQuantidadeProduto";
 const produtoRepo = new ProdutoPrismaRepository();
 

@@ -1,24 +1,31 @@
 import request from "supertest"
 import { app } from "../../src/app"
-import { prisma } from "../../src/infraestructure/prisma/client"
+import { prisma } from "../../prisma/client"
 
 describe("Teste de Integração - Produtos", () => {
-    // beforeEach(async () => {
-    // await prisma.produto.deleteMany();
-    // });
+    beforeEach(async () => {
+        await prisma.produto.deleteMany();
+    });
 
-    // afterAll(async () => {
-    //     await prisma.$disconnect();
-    // });
+    afterAll(async () => {
+        await prisma.$disconnect();
+    });
 
     it("deve criar um produto", async () => {
+        const categoria = await prisma.categoria.create({
+            data : {
+                id: 1,
+                nome: "Categoria Teste"
+            }
+        })
+
         const input = {
             nome: "test2",
             quantidade: 10,
             precoVenda: 5.0,
             precoCompra: 2.0,
             descricao: "sim",
-            idCategoria: 1
+            idCategoria: Number(categoria.id)
         };
 
         const res = await request(app).post("/products").send(input)

@@ -5,7 +5,7 @@ import { CreateCategoria } from "../../application/usecases/Categoria/CreateCate
 import { UpdateCategoria } from "../../application/usecases/Categoria/UpdateCategoria";
 import { DeleteCategoria } from "../../application/usecases/Categoria/DeleteCategoria";
 
-import { CategoriaPrismaRepository } from "../../infraestructure/prisma/repositories/CategoriaPrismaRepository";
+import { CategoriaPrismaRepository } from "../../infraestructure/repositories/CategoriaPrismaRepository";
 const CategoriaRepo = new CategoriaPrismaRepository();
 
 const createCategoria = new CreateCategoria(CategoriaRepo);
